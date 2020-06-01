@@ -35,6 +35,14 @@ namespace ApartmentsRUS.Models
         [DisplayFormat(DataFormatString ="{0:p3}")]
         public decimal propertyTaxRate { get; set; }
 
+        public string buildingAddress
+        {
+            get
+            {
+                return street + " " + city + ", " + state + " " + zip;
+            }
+        }
+
         public ICollection<Investor> investors { get; set; }
         public ICollection<Apartment> apartments { get; set; }
     }

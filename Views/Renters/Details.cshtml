@@ -1,0 +1,49 @@
+﻿@model ApartmentsRUS.Models.Renter
+
+@{
+    ViewBag.Title = "Renter Details";
+}
+<div class="well well-sm">
+    <h2>Renter Details</h2>
+    </div>
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.firstName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.firstName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.lastName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.lastName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.phone)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.phone)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.email)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.email)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.renterID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>

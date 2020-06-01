@@ -21,8 +21,17 @@ namespace ApartmentsRUS.Models
         public int  apartmentID { get; set; }
         public virtual Apartment apartment { get; set; }
 
+        public string apartmentAddr
+        {
+            get
+            {
+                return "Apartment " + apartment.apartmentNum + " at " +apartment.building.buildingAddress;
+            }
+        }
+
         [Display(Name= "Start of lease")]
         [DisplayFormat(DataFormatString ="{0:d}", ApplyFormatInEditMode =true)]
+        [DataType(DataType.DateTime)]
         [Required]
         public DateTime startDate { get; set; }
 
@@ -45,6 +54,6 @@ namespace ApartmentsRUS.Models
 
         [Display(Name ="Amount of refund")]
         [DisplayFormat(DataFormatString = "{0:c2}")]
-        public decimal amtRefunded { get; set; }
+        public decimal? amtRefunded { get; set; }
     }
 }

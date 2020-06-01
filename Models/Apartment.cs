@@ -10,9 +10,17 @@ namespace ApartmentsRUS.Models
     {
         public int apartmentID { get; set; }
 
-        [Display(Name ="Apartment designation")]
+        [Display(Name ="Apartment number")]
         [Required]
-        public string apartment { get; set; }  // Apt 3, Apt C, etc
+        public string apartmentNum { get; set; }  // Apt 3, Apt C, etc
+
+        public string apartmentAddr
+        {
+            get
+            {
+                return "Apartment " + apartmentNum + " at " + building.buildingAddress;
+            }
+        }
 
         [Required]
         public int buildingID { get; set; }

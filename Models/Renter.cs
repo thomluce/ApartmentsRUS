@@ -15,7 +15,7 @@ namespace ApartmentsRUS.Models
         public string firstName { get; set; }
 
         [Required]
-        [Display(Name = "First Name")]
+        [Display(Name = "Last Name")]
         public string lastName { get; set; }
 
         [Display(Name = "Renter's Name")]

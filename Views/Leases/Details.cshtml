@@ -1,0 +1,82 @@
+﻿@model ApartmentsRUS.Models.Lease
+
+@{
+    ViewBag.Title = "Details";
+}
+    <div class="well well-sm">
+        <h2>Details</h2>
+    </div>
+<div>
+    <h4>Lease</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Apartment Address
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.apartment.apartmentAddr)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.renter.fullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.renter.fullName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.startDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.startDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.duration)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.duration)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.securityDeposit)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.securityDeposit)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.monthlyRent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.monthlyRent)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.depositRefunded)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.depositRefunded)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.amtRefunded)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.amtRefunded)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.leaseID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

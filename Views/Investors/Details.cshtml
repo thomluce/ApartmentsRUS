@@ -1,0 +1,73 @@
+﻿@model ApartmentsRUS.Models.Investor
+
+@{
+    ViewBag.Title = "Investor Details";
+}
+<div class="well well-sm">
+    <h2>Investor Details</h2>
+</div>
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                Building Address
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.building.buildingAddress)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.owner.fullName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.owner.fullName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.purchaseDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.purchaseDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.purchasePrice)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.purchasePrice)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.percentOwnership)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.percentOwnership)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.saleDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.saleDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.salePrice)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.salePrice)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.investorID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>

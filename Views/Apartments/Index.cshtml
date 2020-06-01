@@ -1,0 +1,57 @@
+﻿@model IEnumerable<ApartmentsRUS.Models.Apartment>
+
+@{
+    ViewBag.Title = "Apartments";
+}
+    <div class="well well-sm">
+        <h2>Apartments</h2>
+    </div>
+<p>
+    @Html.ActionLink("Create New Apartment", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Building Address
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.apartmentNum)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.bedrooms)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.bathrooms)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.maxOccupancy)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.building.buildingAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.apartmentNum)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.bedrooms)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.bathrooms)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.maxOccupancy)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.apartmentID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.apartmentID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.apartmentID })
+        </td>
+    </tr>
+}
+
+</table>

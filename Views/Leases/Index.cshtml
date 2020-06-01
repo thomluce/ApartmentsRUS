@@ -1,0 +1,76 @@
+﻿@model IEnumerable<ApartmentsRUS.Models.Lease>
+
+@{
+    ViewBag.Title = "Index";
+}
+<div class="well well-sm">
+    <h2>Leases</h2>
+</div>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                Apartment Address
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.renter.fullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.startDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.duration)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.securityDeposit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.monthlyRent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.depositRefunded)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.amtRefunded)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.apartment.apartmentAddr)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.renter.fullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.startDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.duration)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.securityDeposit)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.monthlyRent)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.depositRefunded)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.amtRefunded)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.leaseID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.leaseID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.leaseID })
+                </td>
+            </tr>
+        }
+
+    </table>
