@@ -1,76 +1,95 @@
 ﻿@model IEnumerable<ApartmentsRUS.Models.Building>
-
+@using Microsoft.AspNet.Identity;
+@using ApartmentsRUS.Models;
+@using ApartmentsRUS.DAL;
 @{
     ViewBag.Title = "Buildings";
 }
 <div class="well well-sm">
     <h2>Buildings</h2>
 </div>
-    <p>
-        @Html.ActionLink("Createa a New Building", "Create")
-    </p>
-    <table class="table">
+<p>
+    @Html.ActionLink("Createa a New Building", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.street)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.city)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.state)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.zip)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.inspectionDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.inspectionResults)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.appraisedValue)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.propertyTaxRate)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.street)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.city)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.state)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.zip)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.inspectionDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.inspectionResults)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.appraisedValue)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.propertyTaxRate)
-            </th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.street)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.city)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.state)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.zip)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.inspectionDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.inspectionResults)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.appraisedValue)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.propertyTaxRate)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.buildingID }) |
+            <td>
+                @Html.DisplayFor(modelItem => item.street)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.city)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.state)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.zip)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.inspectionDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.inspectionResults)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.appraisedValue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.propertyTaxRate)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.buildingID })
+                @{
+                    Context db = new Context();
+                    Guid memberId;
+                    Guid.TryParse(User.Identity.GetUserId(), out memberId);
+                    RegisteredUser loggedInUser = db.registeredUsers.Find(memberId);
+                    if (loggedInUser != null) // need to check if we found a user
+                    {
+                        bool isAdmin = loggedInUser.role == RegisteredUser.roles.admin;
+                        bool isOwner = loggedInUser.role == RegisteredUser.roles.owner;
+                        if (isAdmin || isOwner)
+                        {
+                            <a href="/Buildings/edit/@item.buildingID"> | Edit </a>
+                            <a href="/Buildings/delete/@item.buildingID"> | Delete </a>
+                        }
+                    }
+                }
+                @*|
                     @Html.ActionLink("Details", "Details", new { id = item.buildingID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.buildingID })
-                </td>
-            </tr>
-        }
+                    @Html.ActionLink("Delete", "Delete", new { id = item.buildingID })*@
+            </td>
+        </tr>
+    }
 
-    </table>
+</table>

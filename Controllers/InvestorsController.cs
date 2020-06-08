@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using ApartmentsRUS.DAL;
 using ApartmentsRUS.Models;
+using Microsoft.AspNet.Identity;
 
 namespace ApartmentsRUS.Controllers
 {
@@ -43,7 +44,26 @@ namespace ApartmentsRUS.Controllers
         {
             ViewBag.buildingID = new SelectList(db.building, "buildingID", "buildingAddress");
             ViewBag.ownerID = new SelectList(db.owner, "ownerID", "fullName");
-            return View();
+            Guid memberId;
+            Guid.TryParse(User.Identity.GetUserId(), out memberId);
+            RegisteredUser loggedInUser = db.registeredUsers.Find(memberId);
+            if (loggedInUser != null) // need to check if we found a user
+            {
+                bool isAdmin = loggedInUser.role == RegisteredUser.roles.admin;
+                bool isOwner = loggedInUser.role == RegisteredUser.roles.owner;
+                if (isAdmin || isOwner)
+                {
+                    return View();
+                }
+                else
+                {
+                    return View("~/Views/Owners/RestrictedOperation.cshtml");
+                }
+            }
+            else
+            {
+                return View("~/Views/Owners/MissingRegistration.cshtml");
+            }
         }
 
         // POST: Investors/Create
@@ -79,7 +99,26 @@ namespace ApartmentsRUS.Controllers
             }
             ViewBag.buildingID = new SelectList(db.building, "buildingID", "buildingAddress", investor.buildingID);
             ViewBag.ownerID = new SelectList(db.owner, "ownerID", "fullName", investor.ownerID);
-            return View(investor);
+            Guid memberId;
+            Guid.TryParse(User.Identity.GetUserId(), out memberId);
+            RegisteredUser loggedInUser = db.registeredUsers.Find(memberId);
+            if (loggedInUser != null) // need to check if we found a user
+            {
+                bool isAdmin = loggedInUser.role == RegisteredUser.roles.admin;
+                bool isOwner = loggedInUser.role == RegisteredUser.roles.owner;
+                if (isAdmin || isOwner)
+                {
+                    return View(investor);
+                }
+                else
+                {
+                    return View("~/Views/Owners/RestrictedOperation.cshtml");
+                }
+            }
+            else
+            {
+                return View("~/Views/Owners/MissingRegistration.cshtml");
+            }
         }
 
         // POST: Investors/Edit/5

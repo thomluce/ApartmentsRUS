@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using ApartmentsRUS.DAL;
 using ApartmentsRUS.Models;
+using Microsoft.AspNet.Identity;
 
 namespace ApartmentsRUS.Controllers
 {
@@ -42,7 +43,26 @@ namespace ApartmentsRUS.Controllers
         // GET: Buildings/Create
         public ActionResult Create()
         {
-            return View();
+            Guid memberId;
+            Guid.TryParse(User.Identity.GetUserId(), out memberId);
+            RegisteredUser loggedInUser = db.registeredUsers.Find(memberId);
+            if (loggedInUser != null) // need to check if we found a user
+            {
+                bool isAdmin = loggedInUser.role == RegisteredUser.roles.admin;
+                bool isOwner = loggedInUser.role == RegisteredUser.roles.owner;
+                if (isAdmin || isOwner)
+                {
+                    return View();
+                }
+                else
+                {
+                    return View("~/Views/Owners/RestrictedOperation.cshtml");
+                }
+            }
+            else
+            {
+                return View("~/Views/Owners/MissingRegistration.cshtml");
+            }
         }
 
         // POST: Buildings/Create
@@ -58,8 +78,7 @@ namespace ApartmentsRUS.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            return View(building);
+            return View();
         }
 
         // GET: Buildings/Edit/5
@@ -74,7 +93,26 @@ namespace ApartmentsRUS.Controllers
             {
                 return HttpNotFound();
             }
-            return View(building);
+            Guid memberId;
+            Guid.TryParse(User.Identity.GetUserId(), out memberId);
+            RegisteredUser loggedInUser = db.registeredUsers.Find(memberId);
+            if (loggedInUser != null) // need to check if we found a user
+            {
+                bool isAdmin = loggedInUser.role == RegisteredUser.roles.admin;
+                bool isOwner = loggedInUser.role == RegisteredUser.roles.owner;
+                if (isAdmin || isOwner)
+                {
+                    return View(building);
+                }
+                else
+                {
+                    return View("~/Views/Owners/RestrictedOperation.cshtml");
+                }
+            }
+            else
+            {
+                return View("~/Views/Owners/MissingRegistration.cshtml");
+            }
         }
 
         // POST: Buildings/Edit/5
