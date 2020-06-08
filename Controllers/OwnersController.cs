@@ -8,9 +8,11 @@ using System.Web;
 using System.Web.Mvc;
 using ApartmentsRUS.DAL;
 using ApartmentsRUS.Models;
+using Microsoft.AspNet.Identity;
 
 namespace ApartmentsRUS.Controllers
 {
+    [Authorize]
     public class OwnersController : Controller
     {
         private Context db = new Context();
@@ -39,7 +41,26 @@ namespace ApartmentsRUS.Controllers
         // GET: Owners/Create
         public ActionResult Create()
         {
-            return View();
+            Guid memberId;
+            Guid.TryParse(User.Identity.GetUserId(), out memberId);
+            RegisteredUser loggedInUser = db.registeredUsers.Find(memberId);
+            if (loggedInUser != null) // need to check if we found a user
+            {
+                bool isAdmin = loggedInUser.role == RegisteredUser.roles.admin;
+                bool isOwner = loggedInUser.role == RegisteredUser.roles.owner;
+                if (isAdmin || isOwner)
+                {
+                    return View();
+                }
+                else
+                {
+                    return View("RestrictedOperation");
+                }
+            }
+            else
+            {
+                return View("MissingRegistration");
+            }
         }
 
         // POST: Owners/Create
@@ -71,7 +92,26 @@ namespace ApartmentsRUS.Controllers
             {
                 return HttpNotFound();
             }
-            return View(owner);
+            Guid memberId;
+            Guid.TryParse(User.Identity.GetUserId(), out memberId);
+            RegisteredUser loggedInUser = db.registeredUsers.Find(memberId);
+            if (loggedInUser != null) // need to check if we found a user
+            {
+                bool isAdmin = loggedInUser.role == RegisteredUser.roles.admin;
+                bool isOwner = loggedInUser.role == RegisteredUser.roles.owner;
+                if (isAdmin || isOwner)
+                {
+                    return View(owner);
+                }
+                else
+                {
+                    return View("RestrictedOperation");
+                }
+            }
+            else
+            {
+                return View("MissingRegistration");
+            }
         }
 
         // POST: Owners/Edit/5

@@ -1,58 +1,79 @@
 ﻿@model IEnumerable<ApartmentsRUS.Models.Owner>
-
+@using Microsoft.AspNet.Identity;
+@using ApartmentsRUS.Models;
+@using ApartmentsRUS.DAL;
 @{
     ViewBag.Title = "Owners";
 }
 <div class="well well-sm">
     <h2>Owners</h2>
-    </div>
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-    <table class="table">
+</div>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.firstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.lastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.phone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.taxID)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.firstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.lastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.phone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.taxID)
-            </th>
-            <th></th>
+            <td>
+                @Html.DisplayFor(modelItem => item.firstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.lastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.taxID)
+            </td>
+            <td>
+
+                @Html.ActionLink("Details", "Details", new { id = item.ownerID })
+                @{
+                    // create a block of code to see if the user is an administrator or an owner
+                    Context db = new Context();
+                    Guid memberId;
+                    Guid.TryParse(User.Identity.GetUserId(), out memberId);
+                    RegisteredUser loggedInUser = db.registeredUsers.Find(memberId);
+                    if (loggedInUser != null) // need to check if we found a user
+                    {
+                        bool isAdmin = loggedInUser.role == RegisteredUser.roles.admin;
+                        bool isOwner = loggedInUser.role == RegisteredUser.roles.owner;
+                        if (isAdmin || isOwner)
+                        { 
+                             <a href = "/Owners/edit/@item.ownerID" > | Edit </a >
+                             <a href = "/Owners/delete/@item.ownerID" > | Delete </a >
+                        }
+                    }
+                }
+
+
+
+            </td>
         </tr>
+    }
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.firstName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.lastName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.phone)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.taxID)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ownerID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.ownerID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ownerID })
-                </td>
-            </tr>
-        }
-
-    </table>
+</table>

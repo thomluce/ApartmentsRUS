@@ -11,6 +11,7 @@ using ApartmentsRUS.Models;
 
 namespace ApartmentsRUS.Controllers
 {
+    [Authorize]
     public class InvestorsController : Controller
     {
         private Context db = new Context();

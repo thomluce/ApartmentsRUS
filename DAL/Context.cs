@@ -18,6 +18,7 @@ namespace ApartmentsRUS.DAL
         public DbSet<Lease> lease { get; set; }
         public DbSet<Owner> owner { get; set; }
         public DbSet<Renter> renter { get; set; }
+        public DbSet<RegisteredUser> registeredUsers { get; set; }
 
     }
 }

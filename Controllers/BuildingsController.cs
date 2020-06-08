@@ -11,11 +11,14 @@ using ApartmentsRUS.Models;
 
 namespace ApartmentsRUS.Controllers
 {
+
+    [Authorize]
     public class BuildingsController : Controller
     {
         private Context db = new Context();
 
         // GET: Buildings
+        [AllowAnonymous]
         public ActionResult Index()
         {
             return View(db.building.ToList());

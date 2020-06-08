@@ -9,6 +9,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using ApartmentsRUS.Models;
+using System.EnterpriseServices;
+using ApartmentsRUS.DAL;
 
 namespace ApartmentsRUS.Controllers
 {
@@ -76,9 +78,16 @@ namespace ApartmentsRUS.Controllers
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+
             switch (result)
             {
                 case SignInStatus.Success:
+                    Context db = new Context();
+                    var registeredUser = db.registeredUsers.Where(u=>u.email==model.Email).FirstOrDefault(); 
+                    if(registeredUser is null)
+                    {
+                        return View("FinishRegistration");
+                    }
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -156,14 +165,15 @@ namespace ApartmentsRUS.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    // return RedirectToAction("Index", "Home");  // original
+                    return RedirectToAction("Create", "registeredUsers");
                 }
                 AddErrors(result);
             }

@@ -175,6 +175,7 @@
     <Compile Include="Controllers\LeasesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OwnersController.cs" />
+    <Compile Include="Controllers\RegisteredUsersController.cs" />
     <Compile Include="Controllers\RentersController.cs" />
     <Compile Include="DAL\Context.cs" />
     <Compile Include="Global.asax.cs">
@@ -189,11 +190,16 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Owner.cs" />
     <Compile Include="Models\Investor.cs" />
+    <Compile Include="Models\RegisteredUser.cs" />
     <Compile Include="Models\Renter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\ApartmentsRUS.mdf" />
+    <Content Include="App_Data\ApartmentsRUS_log.ldf">
+      <DependentUpon>ApartmentsRUS.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -284,10 +290,19 @@
     <Content Include="Views\Renters\Index.cshtml" />
     <Content Include="Views\Shared\_Layout - Copy.cshtml" />
     <Content Include="Views\Shared\_LoginPartial - Copy.cshtml" />
+    <Content Include="Views\RegisteredUsers\Create.cshtml" />
+    <Content Include="Views\RegisteredUsers\Delete.cshtml" />
+    <Content Include="Views\RegisteredUsers\Details.cshtml" />
+    <Content Include="Views\RegisteredUsers\Edit.cshtml" />
+    <Content Include="Views\RegisteredUsers\Index.cshtml" />
+    <Content Include="Views\RegisteredUsers\DuplicateUser.cshtml" />
+    <Content Include="Views\Account\FinishRegistration.cshtml" />
+    <Content Include="Views\RegisteredUsers\notAuthorized.cshtml" />
+    <Content Include="Views\RegisteredUsers\AdminOnly.cshtml" />
+    <Content Include="Views\Owners\RestrictedOperation.cshtml" />
+    <Content Include="Views\Owners\MissingRegistration.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
