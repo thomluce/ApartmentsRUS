@@ -1,32 +1,31 @@
 ﻿@model ApartmentsRUS.Models.Lease
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edit a Lease";
 }
-    <div class="alert alert-warning">
-        <h2>Edit</h2>
-    </div>
+<div class="alert alert-warning">
+    <h2>Edit a Lease</h2>
+</div>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "Leases", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>Lease</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.leaseID)
 
-    <div class="form-group">
-        <div class="control-label col-md-2" style="font-weight:600">Renter's name</div>
-        <div class="col-md-10">
-            @Html.DropDownList("renterID", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.renterID, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.renterID, "renterID", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("renterID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.renterID, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
         <div class="form-group">
-            <div class="control-label col-md-2" style="font-weight:600">Building address</div>
+            @Html.LabelFor(model => model.apartmentID, "apartmentID", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("apartmentID", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.apartmentID, "", new { @class = "text-danger" })
@@ -80,6 +79,21 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.amtRefunded, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.amtRefunded, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.leaseDoc, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @{
+                    if (Model.leaseDoc != null && Model.leaseDoc != "")
+                    {
+                        <a href="~/LeaseDocuments/@Model.leaseDoc">lease</a>
+                        <br /> <input type="checkbox" value="Remove" id="removeDoc" name="removeDoc" /><span class="text-danger"> Remove current document?</span>
+                    }
+                    <input id="UploadedDocument" type="file" name="UploadedDocument" />
+                }
+                @Html.ValidationMessageFor(model => model.leaseDoc, "", new { @class = "text-danger" })
             </div>
         </div>
 

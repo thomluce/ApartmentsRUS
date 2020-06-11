@@ -170,11 +170,11 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApartmentsController.cs" />
     <Compile Include="Controllers\BuildingsController.cs" />
+    <Compile Include="Controllers\LeasesController.cs" />
     <Compile Include="Controllers\OldApartmentsController.cs" />
     <Compile Include="Controllers\OldBuildingsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InvestorsController.cs" />
-    <Compile Include="Controllers\LeasesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OwnersController.cs" />
     <Compile Include="Controllers\RegisteredUsersController.cs" />
@@ -276,11 +276,6 @@
     <Content Include="Views\Investors\Details.cshtml" />
     <Content Include="Views\Investors\Edit.cshtml" />
     <Content Include="Views\Investors\Index.cshtml" />
-    <Content Include="Views\Leases\Create.cshtml" />
-    <Content Include="Views\Leases\Delete.cshtml" />
-    <Content Include="Views\Leases\Details.cshtml" />
-    <Content Include="Views\Leases\Edit.cshtml" />
-    <Content Include="Views\Leases\Index.cshtml" />
     <Content Include="Views\Owners\Create.cshtml" />
     <Content Include="Views\Owners\Delete.cshtml" />
     <Content Include="Views\Owners\Details.cshtml" />
@@ -315,8 +310,15 @@
     <Content Include="Views\Buildings\Edit.cshtml" />
     <Content Include="Views\Buildings\Index.cshtml" />
     <Content Include="Views\Buildings\DeleteFailed.cshtml" />
+    <Content Include="Views\Leases\Create.cshtml" />
+    <Content Include="Views\Leases\Delete.cshtml" />
+    <Content Include="Views\Leases\Details.cshtml" />
+    <Content Include="Views\Leases\Edit.cshtml" />
+    <Content Include="Views\Leases\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="LeaseDocuments\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

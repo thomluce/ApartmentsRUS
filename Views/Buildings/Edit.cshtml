@@ -3,8 +3,9 @@
 @{
     ViewBag.Title = "Edit Building";
 }
-
-<h2>Edit a Building</h2>
+    <div class="alert alert-warning">
+        <h2>Edit a Building</h2>
+    </div>
 @{
     if (ViewBag.Errormsg != null)
     {
@@ -93,6 +94,12 @@
             @Html.LabelFor(model => model.buildingImage, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <img src="@Url.Content("~/Uploads/")@Model.buildingImage" height="200" />
+                @{ 
+                    if(Model.buildingImage != null)
+                    {
+                       <br/> <input type="checkbox" value="Remove" id="removeImage" name="removeImage"  /><span class="text-danger"> Remove current image?</span>
+                    }
+                }
                 <input id="UploadedImage" type="file" name="UploadedImage" />
                 @Html.ValidationMessageFor(model => model.buildingImage, "", new { @class = "text-danger" })
             </div>

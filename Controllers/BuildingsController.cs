@@ -147,7 +147,11 @@ namespace ApartmentsRUS.Controllers
         {
             if (ModelState.IsValid)
             {
-
+                string removeImage = "";
+                if(Request.Form["removeImage"] != null)
+                {
+                    removeImage = Request.Form["removeImage"];
+                }
                 HttpPostedFileBase file = Request.Files["UploadedImage"];
 
                 if (file != null && file.FileName != null && file.FileName != "")
@@ -160,22 +164,25 @@ namespace ApartmentsRUS.Controllers
                     }
                     else
                     {
-                        string path = Server.MapPath("~/Images/" + TempData["oldPhoto"].ToString());
-                        try
+                        if (TempData["oldPhoto"] != null)
                         {
-                            if (System.IO.File.Exists(path))
+                            string path = Server.MapPath("~/Images/" + TempData["oldPhoto"].ToString());
+                            try
                             {
-                                System.IO.File.Delete(path);
+                                if (System.IO.File.Exists(path))
+                                {
+                                    System.IO.File.Delete(path);
+                                }
+                                else
+                                {
+                                    // must already be deleted
+                                }
                             }
-                            else
+                            catch (Exception Ex)
                             {
-                                // must already be deleted
+                                ViewBag.deleteFailed = Ex.Message;
+                                return View("DeleteFailed");
                             }
-                        }
-                        catch (Exception Ex)
-                        {
-                            ViewBag.deleteFailed = Ex.Message;
-                            return View("DeleteFailed");
                         }
                         if (fi.Name != null && fi.Name != "") // i.e., there was a file selected
                         {
@@ -186,8 +193,18 @@ namespace ApartmentsRUS.Controllers
                 }
                 else
                 {
-                    // no file was selected, so set the photo field back to its original value if (TempData["oldPhoto"] != null)
-                    building.buildingImage = TempData["oldPhoto"].ToString();
+                    // no file was selected, so set the photo field back to its original value
+                    if (TempData["oldPhoto"] != null)
+                    {
+                        if (removeImage=="Remove")
+                        {
+                            building.buildingImage = "";
+                        }
+                        else
+                        {
+                            building.buildingImage = TempData["oldPhoto"].ToString();
+                        }
+                    }
                 }
                 db.Entry(building).State = EntityState.Modified;
                 db.SaveChanges();

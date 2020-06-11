@@ -1,31 +1,31 @@
 ﻿@model ApartmentsRUS.Models.Lease
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Delete a Lease";
 }
     <div class="alert alert-danger">
-        <h2>Delete</h2>
+        <h2>Delete A Lease</h2>
 
-        <h3>Are you sure you want to delete this Lease?</h3>
+        <h3>Are you sure you want to delete this?</h3>
     </div>
 <div>
-
+    <h4>Lease</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-           Apartment Address
+            @Html.DisplayNameFor(model => model.apartment.apartmentNum)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.apartment.apartmentAddr)
+            @Html.DisplayFor(model => model.apartment.apartmentNum)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.renter.fullName)
+            @Html.DisplayNameFor(model => model.renter.firstName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.renter.fullName)
+            @Html.DisplayFor(model => model.renter.firstName)
         </dd>
 
         <dt>
@@ -74,6 +74,19 @@
 
         <dd>
             @Html.DisplayFor(model => model.amtRefunded)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.leaseDoc)
+        </dt>
+
+        <dd>
+            @{
+                if (Model.leaseDoc != null && Model.leaseDoc != "")
+                {
+                    <a href="~/LeaseDocuments/@Model.leaseDoc">lease</a>
+                }
+            }
         </dd>
 
     </dl>
