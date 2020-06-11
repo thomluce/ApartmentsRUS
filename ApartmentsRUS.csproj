@@ -170,6 +170,8 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApartmentsController.cs" />
     <Compile Include="Controllers\BuildingsController.cs" />
+    <Compile Include="Controllers\OldApartmentsController.cs" />
+    <Compile Include="Controllers\OldBuildingsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InvestorsController.cs" />
     <Compile Include="Controllers\LeasesController.cs" />
@@ -200,6 +202,7 @@
     <Content Include="App_Data\ApartmentsRUS_log.ldf">
       <DependentUpon>ApartmentsRUS.mdf</DependentUpon>
     </Content>
+    <Content Include="Uploads\9f3d6806-3a82-476f-82af-dddf2b67f1f1.png" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -258,16 +261,16 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Apartments\Create.cshtml" />
-    <Content Include="Views\Apartments\Delete.cshtml" />
-    <Content Include="Views\Apartments\Details.cshtml" />
-    <Content Include="Views\Apartments\Edit.cshtml" />
-    <Content Include="Views\Apartments\Index.cshtml" />
-    <Content Include="Views\Buildings\Create.cshtml" />
-    <Content Include="Views\Buildings\Delete.cshtml" />
-    <Content Include="Views\Buildings\Details.cshtml" />
-    <Content Include="Views\Buildings\Edit.cshtml" />
-    <Content Include="Views\Buildings\Index.cshtml" />
+    <Content Include="Views\OldApartments\Create.cshtml" />
+    <Content Include="Views\OldApartments\Delete.cshtml" />
+    <Content Include="Views\OldApartments\Details.cshtml" />
+    <Content Include="Views\OldApartments\Edit.cshtml" />
+    <Content Include="Views\OldApartments\Index.cshtml" />
+    <Content Include="Views\OldBuildings\Create.cshtml" />
+    <Content Include="Views\OldBuildings\Delete.cshtml" />
+    <Content Include="Views\OldBuildings\Details.cshtml" />
+    <Content Include="Views\OldBuildings\Edit.cshtml" />
+    <Content Include="Views\OldBuildings\Index.cshtml" />
     <Content Include="Views\Investors\Create.cshtml" />
     <Content Include="Views\Investors\Delete.cshtml" />
     <Content Include="Views\Investors\Details.cshtml" />
@@ -301,6 +304,17 @@
     <Content Include="Views\RegisteredUsers\AdminOnly.cshtml" />
     <Content Include="Views\Owners\RestrictedOperation.cshtml" />
     <Content Include="Views\Owners\MissingRegistration.cshtml" />
+    <Content Include="Views\Apartments\Create.cshtml" />
+    <Content Include="Views\Apartments\Delete.cshtml" />
+    <Content Include="Views\Apartments\Details.cshtml" />
+    <Content Include="Views\Apartments\Edit.cshtml" />
+    <Content Include="Views\Apartments\Index.cshtml" />
+    <Content Include="Views\Buildings\Create.cshtml" />
+    <Content Include="Views\Buildings\Delete.cshtml" />
+    <Content Include="Views\Buildings\Details.cshtml" />
+    <Content Include="Views\Buildings\Edit.cshtml" />
+    <Content Include="Views\Buildings\Index.cshtml" />
+    <Content Include="Views\Buildings\DeleteFailed.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

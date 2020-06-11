@@ -1,14 +1,16 @@
 ﻿@model ApartmentsRUS.Models.Building
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Delete a Building";
 }
 
-<h2>Delete</h2>
+    <div class="alert alert-danger">
+        <h2>Delete a Building</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+        <h3>Are you sure you want to delete this?</h3>
+    </div>
 <div>
-    <h4>Building</h4>
+
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -75,22 +77,13 @@
             @Html.DisplayFor(model => model.propertyTaxRate)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.buildingImage)
-        </dt>
-
-        <dd>
-            @*@Html.DisplayFor(model => model.buildingImage)*@
-            <img src="@Url.Content("~/Uploads/")@Model.buildingImage" height="200" />
-        </dd>
-
     </dl>
 
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
             @Html.ActionLink("Back to List", "Index")
         </div>
     }

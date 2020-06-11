@@ -1,57 +1,58 @@
 ﻿@model ApartmentsRUS.Models.Apartment
 
 @{
-    ViewBag.Title = "Apartment Details";
+    ViewBag.Title = "Details";
 }
-<div class="well well-sm">
-    <h2>Apartment Details</h2>
-    </div>
-    <div>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-               Building Address
-            </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.building.buildingAddress)
-            </dd>
+<h2>Details</h2>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.apartmentNum)
-            </dt>
+<div>
+    <h4>Apartment</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.building.street)
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.apartmentNum)
-            </dd>
+        <dd>
+            @Html.DisplayFor(model => model.building.street)
+        </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.bedrooms)
-            </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.apartmentNum)
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.bedrooms)
-            </dd>
+        <dd>
+            @Html.DisplayFor(model => model.apartmentNum)
+        </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.bathrooms)
-            </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.bedrooms)
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.bathrooms)
-            </dd>
+        <dd>
+            @Html.DisplayFor(model => model.bedrooms)
+        </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.maxOccupancy)
-            </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.bathrooms)
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.maxOccupancy)
-            </dd>
+        <dd>
+            @Html.DisplayFor(model => model.bathrooms)
+        </dd>
 
-        </dl>
-    </div>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.apartmentID }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
+        <dt>
+            @Html.DisplayNameFor(model => model.maxOccupancy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.maxOccupancy)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.apartmentID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

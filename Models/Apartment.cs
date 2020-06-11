@@ -35,5 +35,6 @@ namespace ApartmentsRUS.Models
         [Required]
         public int maxOccupancy { get; set; }
         public ICollection<Lease> leases { get; set; }
+
     }
 }

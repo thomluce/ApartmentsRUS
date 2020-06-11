@@ -45,5 +45,8 @@ namespace ApartmentsRUS.Models
 
         public ICollection<Investor> investors { get; set; }
         public ICollection<Apartment> apartments { get; set; }
+
+        [Display(Name = "Building image")]
+        public string buildingImage { get; set; }
     }
 }

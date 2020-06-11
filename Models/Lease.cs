@@ -55,5 +55,8 @@ namespace ApartmentsRUS.Models
         [Display(Name ="Amount of refund")]
         [DisplayFormat(DataFormatString = "{0:c2}")]
         public decimal? amtRefunded { get; set; }
+
+        [Display(Name ="Lease Document")]
+        public string leaseDoc { get; set; }
     }
 }

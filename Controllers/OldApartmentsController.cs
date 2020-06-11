@@ -12,7 +12,7 @@ using ApartmentsRUS.Models;
 namespace ApartmentsRUS.Controllers
 {
     [Authorize]
-    public class ApartmentsController : Controller
+    public class OldApartmentsController : Controller
     {
         private Context db = new Context();
 
@@ -42,7 +42,7 @@ namespace ApartmentsRUS.Controllers
         // GET: Apartments/Create
         public ActionResult Create()
         {
-            ViewBag.buildingID = new SelectList(db.building, "buildingID", "buildingAddr");
+            ViewBag.buildingID = new SelectList(db.building, "buildingID", "buildingAddress");
             return View();
         }
 
@@ -60,7 +60,7 @@ namespace ApartmentsRUS.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.buildingID = new SelectList(db.building, "buildingID", "buildingAddr", apartment.buildingID);
+            ViewBag.buildingID = new SelectList(db.building, "buildingID", "buildingAddress"); //, apartment.buildingID);
             return View(apartment);
         }
 
@@ -76,7 +76,7 @@ namespace ApartmentsRUS.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.buildingID = new SelectList(db.building, "buildingID", "buildingAddr", apartment.buildingID);
+            ViewBag.buildingID = new SelectList(db.building, "buildingID", "buildingAddress", apartment.buildingID);
             return View(apartment);
         }
 
@@ -85,7 +85,7 @@ namespace ApartmentsRUS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "apartmentID,apartmentNum,buildingID,bedrooms,bathrooms,maxOccupancy")] Apartment apartment)
+        public ActionResult Edit([Bind(Include = "apartmentID,apartment,buildingID,bedrooms,bathrooms,maxOccupancy")] Apartment apartment)
         {
             if (ModelState.IsValid)
             {
@@ -93,7 +93,7 @@ namespace ApartmentsRUS.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.buildingID = new SelectList(db.building, "buildingID", "buildingAddr", apartment.buildingID);
+            ViewBag.buildingID = new SelectList(db.building, "buildingID", "buildingAddress", apartment.buildingID);
             return View(apartment);
         }
 

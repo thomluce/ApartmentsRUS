@@ -1,18 +1,18 @@
 ﻿@model IEnumerable<ApartmentsRUS.Models.Apartment>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Apartments";
 }
-
-<h2>Index</h2>
-
+    <div class="well well-sm">
+        <h2>Apartments</h2>
+    </div>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New Apartment", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.building.street)
+            Building Address
         </th>
         <th>
             @Html.DisplayNameFor(model => model.apartmentNum)
@@ -32,7 +32,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.building.street)
+            @Html.DisplayFor(modelItem => item.building.buildingAddress)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.apartmentNum)

@@ -1,0 +1,11 @@
+﻿
+@{
+    ViewBag.Title = "Delete Failed";
+}
+    <div class="alert alert-danger">
+        <h2>Unable to delete building image</h2>
+        <h3>The standard Exception message was: @ViewBag.deleteFailed.ToString()</h3>
+    </div>
+<br />
+<br/>
+@Html.ActionLink("Returning to building list", "Index", "Buildings")
