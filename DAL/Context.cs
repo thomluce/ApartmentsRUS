@@ -19,6 +19,8 @@ namespace ApartmentsRUS.DAL
         public DbSet<Owner> owner { get; set; }
         public DbSet<Renter> renter { get; set; }
         public DbSet<RegisteredUser> registeredUsers { get; set; }
+        public DbSet<BulkUpload> bulkUpload { get; set; }
+        public DbSet<FileModel> fileModel { get; set; }
 
     }
 }

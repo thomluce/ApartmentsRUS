@@ -1,0 +1,50 @@
+﻿@model ApartmentsRUS.Models.BulkUpload
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>BulkUpload</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.fileName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fileName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.imageUrl)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.imageUrl)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dateUploaded)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dateUploaded)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.include)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.include)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

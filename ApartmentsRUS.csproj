@@ -170,6 +170,8 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApartmentsController.cs" />
     <Compile Include="Controllers\BuildingsController.cs" />
+    <Compile Include="Controllers\BulkUploadsController.cs" />
+    <Compile Include="Controllers\xBulkUploadsController.cs" />
     <Compile Include="Controllers\LeasesController.cs" />
     <Compile Include="Controllers\OldApartmentsController.cs" />
     <Compile Include="Controllers\OldBuildingsController.cs" />
@@ -187,6 +189,8 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Apartment.cs" />
     <Compile Include="Models\Building.cs" />
+    <Compile Include="Models\BulkUpload.cs" />
+    <Compile Include="Models\FileModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Lease.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -324,8 +328,20 @@
     <Content Include="Views\Leases\Edit.cshtml" />
     <Content Include="Views\Leases\Index.cshtml" />
     <Content Include="Views\Buildings\SlideShow.cshtml" />
+    <Content Include="Views\xBulkUploads\Create.cshtml" />
+    <Content Include="Views\xBulkUploads\Delete.cshtml" />
+    <Content Include="Views\xBulkUploads\Details.cshtml" />
+    <Content Include="Views\xBulkUploads\Edit.cshtml" />
+    <Content Include="Views\xBulkUploads\Index.cshtml" />
+    <Content Include="Views\BulkUploads\Create.cshtml" />
+    <Content Include="Views\BulkUploads\Delete.cshtml" />
+    <Content Include="Views\BulkUploads\Details.cshtml" />
+    <Content Include="Views\BulkUploads\Edit.cshtml" />
+    <Content Include="Views\BulkUploads\Index.cshtml" />
+    <Content Include="Views\BulkUploads\SlideShow.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="BulkUploaded\" />
     <Folder Include="LeaseDocuments\" />
   </ItemGroup>
   <ItemGroup>
