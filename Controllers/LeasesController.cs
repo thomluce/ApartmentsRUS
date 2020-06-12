@@ -222,11 +222,12 @@ namespace ApartmentsRUS.Controllers
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
+            }
 
                 ViewBag.apartmentID = new SelectList(db.apartment, "apartmentID", "apartmentNum", lease.apartmentID);
                 ViewBag.renterID = new SelectList(db.renter, "renterID", "firstName", lease.renterID);
                 return View(lease);
-            }
+            
         }
 
             // GET: Leases/Delete/5

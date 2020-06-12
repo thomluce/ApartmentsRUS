@@ -196,12 +196,20 @@
     <Compile Include="Models\Renter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="temp.aspx.cs">
+      <DependentUpon>temp.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="temp.aspx.designer.cs">
+      <DependentUpon>temp.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\ApartmentsRUS.mdf" />
     <Content Include="App_Data\ApartmentsRUS_log.ldf">
       <DependentUpon>ApartmentsRUS.mdf</DependentUpon>
     </Content>
+    <Content Include="temp.aspx" />
     <Content Include="Uploads\9f3d6806-3a82-476f-82af-dddf2b67f1f1.png" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -315,6 +323,7 @@
     <Content Include="Views\Leases\Details.cshtml" />
     <Content Include="Views\Leases\Edit.cshtml" />
     <Content Include="Views\Leases\Index.cshtml" />
+    <Content Include="Views\Buildings\SlideShow.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="LeaseDocuments\" />

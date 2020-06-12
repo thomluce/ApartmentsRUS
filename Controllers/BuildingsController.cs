@@ -276,6 +276,12 @@ namespace ApartmentsRUS.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult SlideShow ()
+        {
+
+            return View(db.building.ToList());
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

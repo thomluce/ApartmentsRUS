@@ -3,9 +3,9 @@
 @{
     ViewBag.Title = "Buildings";
 }
-    <div class="well">
-        <h2>Buildings</h2>
-    </div>
+<div class="well">
+    <h2>Buildings</h2>
+</div>
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
@@ -41,43 +41,47 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.street)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.city)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.state)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.zip)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.inspectionDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.inspectionResults)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.appraisedValue)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.propertyTaxRate)
-        </td>
-        <td>
-            @*@Html.DisplayFor(modelItem => item.buildingImage)*@
-            <img src="@Url.Content("~/Uploads/")@item.buildingImage" height="100" />
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.street)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.city)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.state)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.zip)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.inspectionDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.inspectionResults)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.appraisedValue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.propertyTaxRate)
+            </td>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.buildingImage)*@
+                <img src="@Url.Content("~/Uploads/")@item.buildingImage" height="100" />
 
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.buildingID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.buildingID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.buildingID })
-        </td>
-    </tr>
-}
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.buildingID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.buildingID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.buildingID })
+            </td>
+        </tr>
+        <br />
+
+    }
 
 </table>
+@Html.ActionLink("Parade of Buildings Slide Show", "SlideShow", "Buildings")
