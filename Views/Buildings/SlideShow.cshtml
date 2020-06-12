@@ -32,9 +32,8 @@
         }
     </ol>
     <!-- Wrapper for slides -->
-    <div class="carousel-inner" role="listbox">
+    <div class="carousel-inner" >
         @{
-            int i = 0;
             string status = "active";
         }
         @foreach (var item in Model)
@@ -43,20 +42,16 @@
             {
                 continue;
             }
-            <div class="item @status">
-                @if (i++ == 0)
-                {
+            <div class="item @status" >
+                @{
                     status = "";
                 }
-                }
-                <img src="@Url.Content("~/Uploads/")@item.buildingImage" height="100" alt="@Html.DisplayFor(modelItem => item.city),
+                <img src="@Url.Content("~/Uploads/")@item.buildingImage" width="300" style="padding-left:150px"  alt="@Html.DisplayFor(modelItem => item.city),
                     @Html.DisplayFor(modelItem => item.state)" />
-                @*<div class="carousel-caption">*@
-                    @Html.DisplayFor(modelItem => item.street)
-                    @Html.DisplayFor(modelItem => item.city),
-                    @Html.DisplayFor(modelItem => item.state)
-                    @Html.DisplayFor(modelItem => item.zip)
-                @*</div>*@
+                @Html.DisplayFor(modelItem => item.street)
+                @Html.DisplayFor(modelItem => item.city),
+                @Html.DisplayFor(modelItem => item.state)
+                @Html.DisplayFor(modelItem => item.zip)
             </div>
         }
 
