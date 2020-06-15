@@ -171,7 +171,7 @@ namespace ApartmentsRUS.Controllers
                     FileInfo fi = new FileInfo(file.FileName);
                     if (fi.Extension != ".doc" && fi.Extension != ".docx" && fi.Extension != "pdf")
                     {
-                        ViewBag.Errormsg = "Ddocument File Extension is not valid";
+                        ViewBag.Errormsg = "Document File Extension is not valid";
                         return View(lease);
                     }
                     else
@@ -212,6 +212,23 @@ namespace ApartmentsRUS.Controllers
                         if (removeDoc == "Remove")
                         {
                             lease.leaseDoc = "";
+                            string path = Server.MapPath("~/LeaseDocuments/" + TempData["leaseDoc"].ToString());
+                            try
+                            {
+                                if (System.IO.File.Exists(path))
+                                {
+                                    System.IO.File.Delete(path);
+                                }
+                                else
+                                {
+                                    // must already be deleted
+                                }
+                            }
+                            catch (Exception Ex)
+                            {
+                                ViewBag.deleteFailed = Ex.Message;
+                                return View("DeleteFailed");
+                            }
                         }
                         else
                         {

@@ -51,28 +51,31 @@ namespace ApartmentsRUS.Controllers
         public ActionResult Create(HttpPostedFileBase[] files)
         {
             if (ModelState.IsValid)
-            {   //iterating through multiple file collection 
+            { string prefix = "";
+                if (Request.Form["prefix"] != null)
+                {
+                    prefix = Request.Form["prefix"];
+                }
+            //    iterating through multiple file collection 
                 foreach (HttpPostedFileBase file in files)
                 {
                     //Checking file is available to save.
                     if (file != null)
                     {
                         var InputFileName = Path.GetFileName(file.FileName);
-                        var ServerSavePath = Path.Combine(Server.MapPath("~/BulkUploaded/") + InputFileName);
+                        var ServerSavePath = Path.Combine(Server.MapPath("~/BulkUploaded/") + prefix + InputFileName);
                         //Save file to server folder
                         file.SaveAs(ServerSavePath);
                         //assigning file uploaded status to ViewBag for showing message to user.
                         ViewBag.UploadStatus = files.Count().ToString() + " files uploaded successfully.";
                         // now create a new database record and save it
                         BulkUpload bulkUpload = new BulkUpload();
-                        bulkUpload.imageUrl = InputFileName;
+                        bulkUpload.imageUrl = prefix+InputFileName;
                         bulkUpload.dateUploaded = DateTime.Now;
                         bulkUpload.include = false;  // default slide show inclusion is false
                         db.bulkUpload.Add(bulkUpload);
                         db.SaveChanges();
                     }
-
-
                 }
             }
             return View();

@@ -9,7 +9,10 @@
 
     <div class="form-horizontal">
         <hr />
+
+        File prefix: <input type="text" id="prefix" name="prefix" />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
         <div class="form-group">
             @Html.LabelFor(model => model.files, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">

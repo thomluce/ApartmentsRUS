@@ -166,7 +166,7 @@ namespace ApartmentsRUS.Controllers
                     {
                         if (TempData["oldPhoto"] != null)
                         {
-                            string path = Server.MapPath("~/Images/" + TempData["oldPhoto"].ToString());
+                            string path = Server.MapPath("~/Uploads/" + TempData["oldPhoto"].ToString());
                             try
                             {
                                 if (System.IO.File.Exists(path))
@@ -199,6 +199,24 @@ namespace ApartmentsRUS.Controllers
                         if (removeImage=="Remove")
                         {
                             building.buildingImage = "";
+                            // and remove the physical file
+                            string path = Server.MapPath("~/Uploads/" + TempData["oldPhoto"].ToString());
+                            try
+                            {
+                                if (System.IO.File.Exists(path))
+                                {
+                                    System.IO.File.Delete(path);
+                                }
+                                else
+                                {
+                                    // must already be deleted
+                                }
+                            }
+                            catch (Exception Ex)
+                            {
+                                ViewBag.deleteFailed = Ex.Message;
+                                return View("DeleteFailed");
+                            }
                         }
                         else
                         {

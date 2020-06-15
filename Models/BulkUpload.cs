@@ -12,6 +12,7 @@ namespace ApartmentsRUS.Models
         public string fileName { get; set; }
         public string imageUrl { get; set; }
         public DateTime dateUploaded { get; set; }
+
         [Display(Name ="Display in slide show?")]
         public bool include { get; set; }
     }
