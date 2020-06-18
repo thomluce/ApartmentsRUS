@@ -20,7 +20,7 @@ namespace ApartmentsRUS.Controllers
         // GET: Owners
         public ActionResult Index()
         {
-            return View(db.owner.ToList());
+            return View(db.owner.OrderBy(o=>o.lastName).ThenBy(o=>o.firstName).ToList());
         }
 
         // GET: Owners/Details/5

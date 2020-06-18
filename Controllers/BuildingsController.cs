@@ -7,9 +7,12 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
+using Antlr.Runtime.Tree;
 using ApartmentsRUS.DAL;
 using ApartmentsRUS.Models;
 using Microsoft.AspNet.Identity;
+using PagedList;
 
 namespace ApartmentsRUS.Controllers
 {
@@ -20,9 +23,62 @@ namespace ApartmentsRUS.Controllers
 
         // GET: Buildings
         [AllowAnonymous]
-        public ActionResult Index()
+        public ActionResult Index(int? page, string startDate, string stopDate, string minValue)
         {
-            return View(db.building.ToList());
+            int pgSize = 5;
+            int pageNumber = (page ?? 1);
+
+            ViewBag.startDate = String.IsNullOrEmpty(startDate) ? "" : startDate;
+            ViewBag.stopDate = String.IsNullOrEmpty(stopDate) ? "" : stopDate; 
+            ViewBag.minValue = String.IsNullOrEmpty(minValue) ? "" : minValue;
+
+            //try to convert parameters
+            DateTime startDateSearch = DateTime.MinValue;
+            try
+            {
+                startDateSearch = Convert.ToDateTime(startDate);
+            }
+            catch
+            {
+              // no problem if it isn't a valid date since the default is set above
+            }
+            DateTime endDateSearch = DateTime.MaxValue;
+            try
+            {
+                endDateSearch = Convert.ToDateTime(stopDate);
+            }
+            catch
+            {
+                // no problem if it isn't a valid date since the default is set above
+            }
+            decimal decLowSearch = 0.0m;
+            try
+            {
+                decLowSearch = Convert.ToDecimal(minValue);
+            }
+            catch
+            {
+                // no problem if it isn't a valid date since the default is set above
+            }
+
+            var building = from b in db.building select b;
+            // sort the records
+            building = building.OrderBy(b => b.state).ThenBy(b => b.city);
+
+            if (!String.IsNullOrEmpty(startDate))
+            {
+                building = building.Where(b => b.inspectionDate >= startDateSearch);
+            }
+            if (!String.IsNullOrEmpty(stopDate))
+            {
+                building = building.Where(b => b.inspectionDate <= endDateSearch);
+            }
+            if (!String.IsNullOrEmpty(minValue))
+            {
+                building = building.Where(b => b.appraisedValue >= decLowSearch);
+            }
+            var buildingList = building.ToPagedList(pageNumber, pgSize);
+            return View(buildingList);
         }
 
         // GET: Buildings/Details/5

@@ -8,18 +8,48 @@ using System.Web;
 using System.Web.Mvc;
 using ApartmentsRUS.DAL;
 using ApartmentsRUS.Models;
+using Microsoft.Ajax.Utilities;
+
+using PagedList;
+
 
 namespace ApartmentsRUS.Controllers
 {
     [Authorize]
     public class RentersController : Controller
     {
-        private Context db = new Context();
+        private ApartmentsRUS.DAL.Context db = new ApartmentsRUS.DAL.Context();
 
         // GET: Renters
-        public ActionResult Index()
+        public ActionResult Index(int? page, string searchString)
         {
-            return View(db.renter.ToList());
+            int pgSize = 10;
+            int pageNumber = (page ?? 1);
+
+            ViewBag.search = String.IsNullOrEmpty(searchString) ? "" : searchString;
+
+            var renter = from r in db.renter select r;
+            // sort the records
+            renter = db.renter.OrderBy(r => r.lastName).ThenBy(r => r.firstName); 
+
+            if(!String.IsNullOrEmpty(searchString))
+            {
+                string[] renterNames;
+                renterNames = searchString.Split(' ');
+                if (renterNames.Count() == 1)
+                {
+                    renter = renter.Where(r => r.lastName.Contains(searchString) || r.firstName.Contains(searchString));
+                }
+                else
+                {
+                    string r1 = renterNames[0];
+                    string r2 = renterNames[1];
+                    renter = renter.Where(r => r.firstName.Contains(r1) && r.lastName.Contains(r2));
+                }
+            }
+            var renterList = renter.ToPagedList(pageNumber, pgSize);
+
+            return View(renterList);
         }
 
         // GET: Renters/Details/5

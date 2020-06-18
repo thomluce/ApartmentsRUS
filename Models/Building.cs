@@ -23,12 +23,14 @@ namespace ApartmentsRUS.Models
         public string zip { get; set; }
 
         [Display(Name = "Date of last Inspection")]
+        [DisplayFormat(DataFormatString = "{0:d}")]
         public DateTime? inspectionDate { get; set; }
 
         [Display(Name = "Inspection Report")]
         public string inspectionResults { get; set; }
 
         [Display(Name = "Appraised Value")]
+        [DisplayFormat(DataFormatString = "{0:c0}")]
         public decimal appraisedValue { get; set; }
 
         [Display(Name = "Property Tax Rate")]

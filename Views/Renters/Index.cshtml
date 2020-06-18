@@ -1,52 +1,78 @@
-﻿@model IEnumerable<ApartmentsRUS.Models.Renter>
-
+﻿@*@model IEnumerable<ApartmentsRUS.Models.Renter>*@
+@model PagedList.IPagedList<ApartmentsRUS.Models.Renter>
+@using PagedList.Mvc;
 @{
     ViewBag.Title = "Renters";
+    //var search = ViewBag.search;
 }
 <div class="well well-sm">
     <h2>Renters</h2>
 </div>
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-    <table class="table">
+
+<div class="form-horizontal">
+    <div class="form-group">
+        <div class="col-md-9">
+            @using (Html.BeginForm("Index", "Renters", FormMethod.Get))
+            {
+                <p>Search for name:
+                    @Html.TextBox("searchString", ViewBag.search as string)
+                    <input type="submit" value="Search" />
+                </p>
+            }
+        </div>
+        <div class="col-md-3">
+            @Html.ActionLink("Create New Renter", "Create")
+        </div>
+    </div>
+</div>
+
+<table class="table table-striped">
+    <tr>
+        <th>
+            First Name
+        </th>
+        <th>
+            Last Name
+        </th>
+        <th>
+            Phone Number
+        </th>
+        <th>
+            Email Address
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.firstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.lastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.phone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.email)
-            </th>
-            <th></th>
+            <td>
+                @Html.DisplayFor(modelItem => item.firstName)
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.lastName)
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.phone)
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.email)
+
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.renterID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.renterID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.renterID })
+            </td>
         </tr>
+    }
+</table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.firstName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.lastName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.phone)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.email)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.renterID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.renterID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.renterID })
-                </td>
-            </tr>
-        }
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchString = ViewBag.search }))
 
-    </table>
+     @*new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))*@
