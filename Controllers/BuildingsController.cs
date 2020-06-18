@@ -23,14 +23,14 @@ namespace ApartmentsRUS.Controllers
 
         // GET: Buildings
         [AllowAnonymous]
-        public ActionResult Index(int? page, string startDate, string stopDate, string minValue)
+        public ActionResult Index(int? page, string startDate, string stopDate, string minValue, string sorting)
         {
             int pgSize = 5;
             int pageNumber = (page ?? 1);
-
             ViewBag.startDate = String.IsNullOrEmpty(startDate) ? "" : startDate;
             ViewBag.stopDate = String.IsNullOrEmpty(stopDate) ? "" : stopDate; 
             ViewBag.minValue = String.IsNullOrEmpty(minValue) ? "" : minValue;
+            ViewBag.sorting = String.IsNullOrEmpty(sorting) ? "" : sorting;
 
             //try to convert parameters
             DateTime startDateSearch = DateTime.MinValue;
@@ -62,8 +62,22 @@ namespace ApartmentsRUS.Controllers
             }
 
             var building = from b in db.building select b;
-            // sort the records
-            building = building.OrderBy(b => b.state).ThenBy(b => b.city);
+            if(String.IsNullOrEmpty(sorting) || sorting == "city" || sorting == "state")  // default sorting
+            { 
+                building = building.OrderBy(b => b.state).ThenBy(b => b.city);
+            }
+            else if(sorting=="value")
+            {
+                building = building.OrderBy(b => b.appraisedValue);
+            }
+            else if (sorting == "zip")
+            {
+                building = building.OrderBy(b => b.zip);
+            }
+            else if (sorting == "inspection")
+            {
+                building = building.OrderBy(b => b.inspectionDate);
+            }
 
             if (!String.IsNullOrEmpty(startDate))
             {
@@ -126,6 +140,7 @@ namespace ApartmentsRUS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public ActionResult Create([Bind(Include = "buildingID,street,city,state,zip,inspectionDate,inspectionResults,appraisedValue,propertyTaxRate,buildingImage")] Building building)
         {
             if (ModelState.IsValid)
@@ -199,6 +214,7 @@ namespace ApartmentsRUS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public ActionResult Edit([Bind(Include = "buildingID,street,city,state,zip,inspectionDate,inspectionResults,appraisedValue,propertyTaxRate,buildingImage")] Building building)
         {
             if (ModelState.IsValid)

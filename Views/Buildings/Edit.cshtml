@@ -3,9 +3,9 @@
 @{
     ViewBag.Title = "Edit Building";
 }
-    <div class="alert alert-warning">
-        <h2>Edit a Building</h2>
-    </div>
+<div class="alert alert-warning">
+    <h2>Edit a Building</h2>
+</div>
 @{
     if (ViewBag.Errormsg != null)
     {
@@ -69,7 +69,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.inspectionResults, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.inspectionResults, new { htmlAttributes = new { @class = "form-control" } })
+                @*@Html.EditorFor(model => model.inspectionResults, new { htmlAttributes = new { @class = "form-control" } })*@
+                @Html.TextAreaFor(model => model.inspectionResults, 5, 120, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.inspectionResults, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -94,10 +95,10 @@
             @Html.LabelFor(model => model.buildingImage, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <img src="@Url.Content("~/Uploads/")@Model.buildingImage" height="200" />
-                @{ 
-                    if(Model.buildingImage != null)
+                @{
+                    if (Model.buildingImage != null)
                     {
-                       <br/> <input type="checkbox" value="Remove" id="removeImage" name="removeImage"  /><span class="text-danger"> Remove current image?</span>
+                        <br /> <input type="checkbox" value="Remove" id="removeImage" name="removeImage" /><span class="text-danger"> Remove current image?</span>
                     }
                 }
                 <input id="UploadedImage" type="file" name="UploadedImage" />
@@ -119,4 +120,12 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script src="https://cdn.tiny.cloud/1/fzxgmyrusqmumf27674vxvzeg4kf474iftitt160b06r1qnb/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: '#inspectionResults',
+            plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+            toolbar_mode: 'floating',
+        });
+    </script>
 }

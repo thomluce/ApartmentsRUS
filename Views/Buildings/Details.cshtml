@@ -55,7 +55,11 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.inspectionResults)
+            @*@Html.DisplayFor(model => model.inspectionResults)*@
+            @{
+                var result = Model.inspectionResults;
+            }
+            @Html.Raw(System.Web.HttpUtility.HtmlDecode(result))
         </dd>
 
         <dt>

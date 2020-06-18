@@ -49,22 +49,22 @@
             Street
         </th>
         <th>
-            City
+            @Html.ActionLink("City", "Index", "Buildings", new { startDate = ViewBag.startDate, stopDate = ViewBag.stopDate, minValue = ViewBag.minValue, sorting = "city" }, null)
         </th>
         <th>
-            State
+            @Html.ActionLink("State", "Index", "Buildings", new { startDate = ViewBag.startDate, stopDate = ViewBag.stopDate, minValue = ViewBag.minValue, sorting = "state" }, null)
         </th>
         <th>
-            Zip
+            @Html.ActionLink("Zip", "Index", "Buildings", new { startDate = ViewBag.startDate, stopDate = ViewBag.stopDate, minValue = ViewBag.minValue, sorting = "zip" }, null)
         </th>
         <th>
-            InspectionDate
+            @Html.ActionLink("Inspection Date", "Index", "Buildings", new { startDate = ViewBag.startDate, stopDate = ViewBag.stopDate, minValue = ViewBag.minValue, sorting = "inspection" }, null)
         </th>
         <th>
             InspectionResults
         </th>
         <th>
-            Appraised Value
+            @Html.ActionLink("Appraised Value", "Index", "Buildings", new { startDate = ViewBag.startDate, stopDate = ViewBag.stopDate, minValue = ViewBag.minValue, sorting = "value"}, null )
         </th>
         <th>
             Tax Rate
@@ -94,7 +94,12 @@
                 @Html.DisplayFor(modelItem => item.inspectionDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.inspectionResults)
+                @*@Html.DisplayFor(modelItem => item.inspectionResults)*@
+                @{ 
+                    var result = item.inspectionResults;
+                }
+                @Html.Raw(System.Web.HttpUtility.HtmlDecode(result))
+
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.appraisedValue)
@@ -123,6 +128,6 @@
 Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
 @Html.PagedListPager(Model, page => Url.Action("Index",
-    new { page, startDate = ViewBag.startDate, stopDate = ViewBag.stopDate, minValue = ViewBag.minValue }))
+    new { page, startDate = ViewBag.startDate, stopDate = ViewBag.stopDate, minValue = ViewBag.minValue, sorting = ViewBag.sorting }))
 
 @*new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))*@
