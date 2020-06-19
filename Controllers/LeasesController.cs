@@ -318,5 +318,10 @@ namespace ApartmentsRUS.Controllers
             }
             base.Dispose(disposing);
         }
+
+        public ActionResult leaseExpiring()
+        {
+            return RedirectToAction("leaseExpiring", "Apartments");
+        }
     }
 }

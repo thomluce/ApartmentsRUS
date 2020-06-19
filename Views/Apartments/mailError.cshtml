@@ -1,0 +1,10 @@
+﻿
+@{
+    ViewBag.Title = "mailError";
+}
+    <div class="alert alert-danger ">
+        <h2>Mail Error</h2>
+        <h3> The following error occurred while trying to send the email message:
+            @TempData["mailError"].ToString()
+        </h3>
+    </div>

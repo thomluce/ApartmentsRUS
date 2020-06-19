@@ -1,5 +1,6 @@
-﻿@model IEnumerable<ApartmentsRUS.Models.Apartment>
-
+﻿@*@model IEnumerable<ApartmentsRUS.Models.Apartment>*@
+@model PagedList.IPagedList<ApartmentsRUS.Models.Apartment>
+@using PagedList.Mvc;
 @{
     ViewBag.Title = "Index";
 }
@@ -12,46 +13,55 @@
 <table class="table table-striped">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.building.street)
+            Apartment Number
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.apartmentNum)
+            Aparement Address
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.bedrooms)
+            Bedrooms
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.bathrooms)
+            Bathrooms
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.maxOccupancy)
+            Max Occupancy
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.building.street)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.apartmentNum)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.bedrooms)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.bathrooms)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.maxOccupancy)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.apartmentID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.apartmentID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.apartmentID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.apartmentNum)
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.building.buildingAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.bedrooms)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.bathrooms)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.maxOccupancy)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.apartmentID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.apartmentID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.apartmentID })
+            </td>
+        </tr>
+    }
 
 </table>
+<br />
+@Html.ActionLink("Send lease expiration notices", "leaseExpiring", "Apartments")
+<br />
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchString = ViewBag.search }))

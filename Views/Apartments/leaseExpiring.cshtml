@@ -1,0 +1,10 @@
+﻿
+@{
+    ViewBag.Title = "leaseExpiring";
+    DateTime leaseEnd = ViewBag.leaseEnd;
+}
+    <div class="well">
+        <h2>Lease Expiring between @DateTime.Now.ToShortDateString() and @leaseEnd.ToShortDateString()</h2>
+    </div>
+@Html.Raw(ViewBag.notification);
+
