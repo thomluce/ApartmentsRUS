@@ -2,21 +2,51 @@
 @model PagedList.IPagedList<ApartmentsRUS.Models.Apartment>
 @using PagedList.Mvc;
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Apartments";
 }
 
-<h2>Index</h2>
+<h2>Apartments</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+@using (Html.BeginForm("Index", "Apartments", FormMethod.Get))
+{
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-12">
+                To search, enter one or more criteria and press the Search button
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <p>
+                    City:
+                    @Html.TextBox("city", ViewBag.search as string)
+                </p>
+            </div>
+            <div class="col-md-3">
+                <p>
+                    State:
+                    @Html.TextBox("state", ViewBag.search as string)
+                   
+                </p>
+            </div>
+            <div class="col-md-3">
+                <p>
+                    <input type="submit" value="Search" />
+                </p>
+            </div>
+            <div class="col-md-3">
+                @Html.ActionLink("Create New Apartment", "Create")
+            </div>
+        </div>
+    </div>
+}
 <table class="table table-striped">
     <tr>
         <th>
             Apartment Number
         </th>
         <th>
-            Aparement Address
+            Apartment Address
         </th>
         <th>
             Bedrooms
@@ -59,9 +89,9 @@
 
 </table>
 <br />
-@Html.ActionLink("Send lease expiration notices", "leaseExpiring", "Apartments")
+@Html.ActionLink("Send lease expiration notices", "leaseExpiring", "Apartments", new { city = ViewBag.city, state = ViewBag.state }, null)
 <br />
 <br />
 Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
-@Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchString = ViewBag.search }))
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, city = ViewBag.city, state = ViewBag.state }))

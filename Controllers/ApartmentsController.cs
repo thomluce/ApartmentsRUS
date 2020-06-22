@@ -10,6 +10,7 @@ using ApartmentsRUS.DAL;
 using ApartmentsRUS.Models;
 using System.Net.Mail;
 using PagedList;
+using System.Web.Services.Description;
 
 namespace ApartmentsRUS.Controllers
 {
@@ -20,16 +21,31 @@ namespace ApartmentsRUS.Controllers
 
         // GET: Apartments
         [AllowAnonymous]
-        public ActionResult Index(int? page)
+        public ActionResult Index(int? page, string city, string state)
         {
             var apartment = db.apartment.Include(a => a.building);
             apartment = from a in db.apartment select a;
 
             int pgSize = 15;
             int pageNumber = (page ?? 1);
+            ViewBag.city = String.IsNullOrEmpty(city) ? "" : city;
+            ViewBag.state = String.IsNullOrEmpty(state) ? "" : state;
+            //sort by city and state
+            apartment = apartment.OrderBy(a => a.building.state).ThenBy(a => a.building.city).ThenBy(a=>a.building.street).ThenBy(a=>a.apartmentNum);
 
-            // sort the records
-            apartment = db.apartment.OrderBy(a=>a.building.state).ThenBy(a=>a.building.city).ThenBy(a=>a.building.street);
+            if(!string.IsNullOrEmpty(state) && !string.IsNullOrEmpty(city))
+            {
+                apartment = apartment.Where(a => a.building.state==state).Where(a => a.building.city==city);
+            }
+            else if (!string.IsNullOrEmpty(state))
+            {
+                apartment = apartment.Where(a => a.building.state==state);
+            }
+            else if (!string.IsNullOrEmpty(city))
+            {
+                apartment = apartment.Where(a => a.building.city == city);
+            }
+
 
             var apartmentList = apartment.ToPagedList(pageNumber, pgSize);
 
@@ -89,7 +105,7 @@ namespace ApartmentsRUS.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.buildingID = new SelectList(db.building, "buildingID", "buildingAddr", apartment.buildingID);
+            ViewBag.buildingID = new SelectList(db.building, "buildingID", "buildingAddress", apartment.buildingID);
             return View(apartment);
         }
 
@@ -145,10 +161,25 @@ namespace ApartmentsRUS.Controllers
             base.Dispose(disposing);
         }
 
-        public ActionResult leaseExpiring()
+        public ActionResult leaseExpiring(string city, string state)
         {
             int leadTime = 3;
             var lease = from a in db.lease select a;
+
+            lease = lease.OrderBy(l => l.apartment.building.state).ThenBy(l => l.apartment.building.city).ThenBy(l => l.apartment.building.street);
+            if(!String.IsNullOrEmpty(state) && !String.IsNullOrEmpty(city)) 
+            {
+                lease = lease.Where(l => l.apartment.building.state == state && l.apartment.building.state == city);
+            }
+            else if (!String.IsNullOrEmpty(state))
+            {
+                lease = lease.Where(l => l.apartment.building.state == state);
+            }
+            else if (!String.IsNullOrEmpty(city))
+            {
+                lease = lease.Where(l => l.apartment.building.city == city);
+            }
+           
             int leasesNearExpiring = 0;
             string notification = "Lease expiration notifications sent to:<br/>";
             ViewBag.leaseEnd = DateTime.Now.AddMonths(leadTime);
@@ -164,15 +195,15 @@ namespace ApartmentsRUS.Controllers
                     var addr = l.apartmentAddr;
                     var email = l.renter.email;
                     leasesNearExpiring++;
-                    var msg = "Hi " + firstName + " " + lastName + ",\n\n>We wanted to remind you that your lease on " + addr;
+                    var msg = "Hi " + firstName + " " + lastName + ",\n\nWe wanted to remind you that your lease on " + addr;
                     msg += " is expiring on " + leaseEnd.ToShortDateString() + ".";
-                    msg += "\n\nPlease contact us soon if you are interesting in renewing your lease.";
+                    msg += "\n\nPlease contact us soon if you are interested in renewing your lease.";
                     msg += "\n\nSincerely\nApartments-R-US Management Team";
                     notification += "<br/>" + l.renter.fullName + " at " + addr + "  -  Expiring on " + leaseEnd.ToShortDateString();
                     MailMessage myMessage = new MailMessage();
-                    MailAddress from = new MailAddress("thomluce@gmail.com", "SysAdmin");
+                    MailAddress from = new MailAddress("apartmentsRUS@gmail.com", "SysAdmin");
                     myMessage.From = from;
-                    myMessage.To.Add("thomluce@gmail.com"); // this should be replaced with model data
+                    myMessage.To.Add(email); 
                     myMessage.Subject = "Lease ending";
                     myMessage.Body = msg;
                     try
@@ -181,7 +212,7 @@ namespace ApartmentsRUS.Controllers
                         smtp.Host = "smtp.gmail.com";
                         smtp.Port = 587;
                         smtp.UseDefaultCredentials = false;
-                        smtp.Credentials = new System.Net.NetworkCredential("thomluce", "Elphaba_238"); // Enter seders User name and password  
+                        smtp.Credentials = new System.Net.NetworkCredential("GmailUserAcnt", "Password"); 
                         smtp.EnableSsl = true;
                      //   smtp.Send(myMessage);
                         TempData["mailError"] = "";
@@ -195,6 +226,7 @@ namespace ApartmentsRUS.Controllers
                 }
             }
             ViewBag.notification = notification;
+            ViewBag.notificationCnt = leasesNearExpiring;
             return View();
         }
     }

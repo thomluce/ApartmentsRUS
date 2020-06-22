@@ -41,7 +41,7 @@ namespace ApartmentsRUS.Models
         {
             get
             {
-                return street + " " + city + ", " + state + " " + zip;
+                return street + " - " + city + ", " + state + " " + zip;
             }
         }
 

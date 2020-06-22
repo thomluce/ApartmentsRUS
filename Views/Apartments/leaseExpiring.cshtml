@@ -2,9 +2,20 @@
 @{
     ViewBag.Title = "leaseExpiring";
     DateTime leaseEnd = ViewBag.leaseEnd;
+    var leaseCnt = ViewBag.notificationCnt;
 }
-    <div class="well">
-        <h2>Lease Expiring between @DateTime.Now.ToShortDateString() and @leaseEnd.ToShortDateString()</h2>
-    </div>
-@Html.Raw(ViewBag.notification);
-
+<div class="well">
+    <h2>Lease Expiring between @DateTime.Now.ToShortDateString() and @leaseEnd.ToShortDateString()</h2>
+</div>
+@{
+    if (leaseCnt > 0)
+    {
+        @Html.Raw(ViewBag.notification);
+        <br />
+        @leaseCnt.ToString(); <span> leases found</span>
+    }
+    else
+    {
+        <h3>No expiring leases found.</h3>
+    }
+}
