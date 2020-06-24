@@ -1,0 +1,57 @@
+﻿@model IEnumerable<ApartmentsRUS.Models.Investor>
+
+<table class="table table-bordered">
+    <tr class="bg-info text-info">
+        <th>
+            @Html.DisplayNameFor(model => model.building.street)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.purchaseDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.purchasePrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.percentOwnership)
+        </th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr class="bg-info text-info">
+            <td>
+                @Html.DisplayFor(modelItem => item.building.street)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.purchaseDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.purchasePrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.percentOwnership)
+            </td>
+        </tr>
+        <tr>
+            <td colspan="1">
+                &nbsp;
+            </td>
+            <td colspan="5">
+                @{
+                    int buildingID = item.buildingID;
+                    ApartmentsRUS.DAL.Context db = new ApartmentsRUS.DAL.Context();
+                    //   var play = db.lease.Where(l=>l.apartment.buildingID==buildingID && l.startDate.AddMonths(l.duration)<DateTime.Now)
+
+                    //var apartments = db.apartment.Where(i => i.buildingID == buildingID);
+                    //apartments = apartments.Where(a => a.leases.Count == 0);
+
+                    var apartments = db.apartment.Where(i => i.buildingID == buildingID && i.leases.Count == 0).OrderBy(a => a.apartmentNum).ToList();
+
+                    if (apartments != null && apartments.Count>0)
+                    {
+                        Html.RenderPartial("_buildingsApartments", apartments);
+                    }
+                }
+            </td>
+        </tr>
+    }
+</table>

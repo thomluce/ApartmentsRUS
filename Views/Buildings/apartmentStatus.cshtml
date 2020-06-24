@@ -1,0 +1,54 @@
+﻿@model IEnumerable<ApartmentsRUS.Models.Building>
+
+@{
+    ViewBag.Title = "ApartmentStatus";
+}
+<div class="well">
+    <h2>Apartment Status</h2>
+</div>
+
+@using (Html.BeginForm("apartmentStatus", "Buildings", FormMethod.Get))
+{
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-12">
+                To search, enter one or more criteria and press the Search button
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <p>
+                    City:
+                    @Html.TextBox("city", ViewBag.search as string)
+                </p>
+            </div>
+            <div class="col-md-3">
+                <p>
+                    State:
+                    @Html.TextBox("state", ViewBag.search as string)
+                    <input type="submit" value="Search" />
+                </p>
+            </div>
+
+        </div>
+    </div>
+}
+@foreach (var item in Model)
+{
+
+    ApartmentsRUS.DAL.Context db = new ApartmentsRUS.DAL.Context();
+    var apartments = db.apartment.Where(a => a.buildingID == item.buildingID).OrderBy(a => a.apartmentNum);
+    <div class="row bg-info">
+        <div class="col-md-12">
+            @Html.DisplayFor(modelItem => item.buildingAddress)
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1">
+            &nbsp;
+        </div>
+        <div class="col-md-10">
+            @Html.Partial("_apartmentList", apartments)
+        </div>
+    </div>
+}

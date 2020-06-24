@@ -27,12 +27,15 @@ namespace ApartmentsRUS.Models
         public virtual Building building  { get; set; }
 
         [Required]
+        [Display(Name = "Num of Bedrooms")]
         public int bedrooms { get; set; }
 
         [Required]
+        [Display(Name = "Num of Bathrooms")]
         public int bathrooms { get; set; }
 
         [Required]
+        [Display(Name = "Max Occupancy")]
         public int maxOccupancy { get; set; }
         public ICollection<Lease> leases { get; set; }
 

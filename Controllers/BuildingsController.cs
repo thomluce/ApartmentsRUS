@@ -380,5 +380,29 @@ namespace ApartmentsRUS.Controllers
             }
             base.Dispose(disposing);
         }
+
+        public ActionResult apartmentStatus (string city, string state)
+        {
+            var buildings = db.building.Include(b => b.apartments);
+            buildings = buildings.OrderBy(b => b.state).ThenBy(b => b.city).ThenBy(b => b.street);
+            if (!String.IsNullOrEmpty(state) && !String.IsNullOrEmpty(city))
+            {
+                buildings = buildings.Where(l => l.state == state && l.city == city);
+            }
+            if (!String.IsNullOrEmpty(state) && !String.IsNullOrEmpty(city))
+            {
+                buildings = buildings.Where(l => l.state == state && l.city == city);
+            }
+            else if (!String.IsNullOrEmpty(state))
+            {
+                buildings = buildings.Where(l => l.state == state);
+            }
+            else if (!String.IsNullOrEmpty(city))
+            {
+                buildings = buildings.Where(l => l.city == city);
+            }
+
+            return View(buildings);
+        }
     }
 }

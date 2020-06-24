@@ -64,7 +64,7 @@
             InspectionResults
         </th>
         <th>
-            @Html.ActionLink("Appraised Value", "Index", "Buildings", new { startDate = ViewBag.startDate, stopDate = ViewBag.stopDate, minValue = ViewBag.minValue, sorting = "value"}, null )
+            @Html.ActionLink("Appraised Value", "Index", "Buildings", new { startDate = ViewBag.startDate, stopDate = ViewBag.stopDate, minValue = ViewBag.minValue, sorting = "value" }, null)
         </th>
         <th>
             Tax Rate
@@ -95,7 +95,7 @@
             </td>
             <td>
                 @*@Html.DisplayFor(modelItem => item.inspectionResults)*@
-                @{ 
+                @{
                     var result = item.inspectionResults;
                 }
                 @Html.Raw(System.Web.HttpUtility.HtmlDecode(result))
@@ -124,6 +124,7 @@
 
 @Html.ActionLink("Parade of Buildings Slide Show", "SlideShow", "Buildings")
 <br />
+@Html.ActionLink("Check availability of apartments", "apartmentStatus", "Buildings")
 <br />
 Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 

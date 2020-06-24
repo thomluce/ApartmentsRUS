@@ -34,7 +34,7 @@ namespace ApartmentsRUS.Models
         public decimal appraisedValue { get; set; }
 
         [Display(Name = "Property Tax Rate")]
-        [DisplayFormat(DataFormatString ="{0:p3}")]
+        [DisplayFormat(DataFormatString = "{0:p3}")]
         public decimal propertyTaxRate { get; set; }
 
         public string buildingAddress
@@ -46,7 +46,22 @@ namespace ApartmentsRUS.Models
         }
 
         public ICollection<Investor> investors { get; set; }
+        public int investmentCnt
+        {
+            get
+            {
+                return investors.Count;
+            }
+        }
         public ICollection<Apartment> apartments { get; set; }
+        public int apartmentCnt
+        {
+            get
+            {
+                return apartments.Count;
+            }
+        }
+
 
         [Display(Name = "Building image")]
         public string buildingImage { get; set; }

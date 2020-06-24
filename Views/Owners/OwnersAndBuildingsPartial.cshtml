@@ -1,0 +1,65 @@
+﻿@model IEnumerable<ApartmentsRUS.Models.Owner>
+
+@{
+    ViewBag.Title = "OwnersAndBuildings";
+}
+
+<div class="well">
+    @*<h2>Owners And Buildings with Partial View</h2>*@
+    <h2>Buildings with Vacant Apartments</h2>
+</div>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.fullName)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.phone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.taxID)
+
+        </th>
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.fullName)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.taxID)
+            </td>
+
+        </tr>
+        int ownerID = item.ownerID;
+        // the next line is how you can get to the Context without a using statement
+        ApartmentsRUS.DAL.Context db = new ApartmentsRUS.DAL.Context();
+        var investor = db.investor.Where(o => o.ownerID == ownerID).ToList();
+        if (investor != null && investor.Count>0)
+        {
+                <tr>
+                    <td>
+                        &nbsp;
+                    </td>
+                    <td colspan="5">
+                        @Html.Partial("_ownerNbuildings", investor)
+                    </td>
+                </tr>
+        }
+    }
+</table>

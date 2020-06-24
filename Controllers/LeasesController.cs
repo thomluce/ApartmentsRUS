@@ -40,25 +40,34 @@ namespace ApartmentsRUS.Controllers
         }
 
         // GET: Leases/Create
-        public ActionResult Create()
+       [Authorize]
+        public ActionResult Create(int? apartmentID)
         {
             Guid memberId;
             Guid.TryParse(User.Identity.GetUserId(), out memberId);
             RegisteredUser loggedInUser = db.registeredUsers.Find(memberId);
             if (loggedInUser != null) // need to check if we found a user
             {
-                bool isAdmin = loggedInUser.role == RegisteredUser.roles.admin;
-                bool isOwner = loggedInUser.role == RegisteredUser.roles.owner;
-                if (isAdmin || isOwner)
-                {
-                    ViewBag.apartmentID = new SelectList(db.apartment, "apartmentID", "apartmentAddr");
-                    ViewBag.renterID = new SelectList(db.renter, "renterID", "fullName");
+                // the following lines are currently deactivated so anyone can create a lease
+                //bool isAdmin = loggedInUser.role == RegisteredUser.roles.admin;
+                //bool isOwner = loggedInUser.role == RegisteredUser.roles.owner;
+               // if(isAdmin || isOwner)
+               // {
+                    // find the renterID for this person
+                    var renter = db.renter.Where(r => r.email == loggedInUser.email).FirstOrDefault();
+                var renterID = 0;
+                if(renter != null)
+                { 
+                    renterID = renter.renterID;
+                }
+                    ViewBag.apartmentID = new SelectList(db.apartment, "apartmentID", "apartmentAddr", apartmentID);
+                    ViewBag.renterID = new SelectList(db.renter, "renterID", "fullName", renterID);
                     return View();
-                }
-                else
-                {
-                    return View("~/Views/Owners/RestrictedOperation.cshtml");
-                }
+                //}
+                //else
+                //{
+                //    return View("~/Views/Owners/RestrictedOperation.cshtml");
+                //}
             }
             else
             {

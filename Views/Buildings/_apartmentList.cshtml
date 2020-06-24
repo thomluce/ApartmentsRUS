@@ -1,0 +1,67 @@
+﻿@model IEnumerable<ApartmentsRUS.Models.Apartment>
+
+
+<div class="row">
+
+    <div class="col-md-2 text-primary">
+        @Html.DisplayNameFor(model => model.apartmentNum)
+    </div>
+    <div class="col-md-2 text-primary">
+        @Html.DisplayNameFor(model => model.bedrooms)
+    </div>
+    <div class="col-md-2 text-primary">
+        @Html.DisplayNameFor(model => model.bathrooms)
+    </div>
+    <div class="col-md-2 text-primary">
+        @Html.DisplayNameFor(model => model.maxOccupancy)
+    </div>
+    <div class="col-md-2 text-primary">
+        Status
+    </div>
+</div>
+
+
+@foreach (var item in Model)
+{
+    <div class="row">
+        <div class="col-md-2 text-center">
+            @Html.DisplayFor(modelItem => item.apartmentNum)
+        </div>
+        <div class="col-md-2  text-center">
+            @Html.DisplayFor(modelItem => item.bedrooms)
+        </div>
+        <div class="col-md-2  text-center">
+            @Html.DisplayFor(modelItem => item.bathrooms)
+        </div>
+        <div class="col-md-2  text-center">
+            @Html.DisplayFor(modelItem => item.maxOccupancy)
+        </div>
+        <div class="col-md-4">
+            @{
+                ApartmentsRUS.DAL.Context db = new ApartmentsRUS.DAL.Context();
+                var status = "Available";
+                var leaseList = from rental in db.lease select rental;
+                leaseList = leaseList.Where(l => l.apartmentID == item.apartmentID);
+                int c = 0;
+                foreach (var l in leaseList)
+                {
+                    DateTime endDate = l.startDate.AddMonths(l.duration);
+                    if (endDate > DateTime.Now)
+                    {
+                        status = "Rented until " + endDate.ToShortDateString();
+                        break;
+                    }
+
+                }
+                @status.ToString()
+                if (status == "Available")
+                {
+                    <span> (</span>
+                     @Html.ActionLink("Lease", "Create", "Leases", new { apartmentID = @item.apartmentID }, null);
+                    <span>)</span>
+                }
+            }
+        </div>
+    </div>
+}
+

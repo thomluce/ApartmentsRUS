@@ -342,6 +342,12 @@
     <Content Include="Views\Leases\leaseExpiring.cshtml" />
     <Content Include="Views\Apartments\mailError.cshtml" />
     <Content Include="Views\Apartments\leaseExpiring.cshtml" />
+    <Content Include="Views\Owners\OwnersAndBuildings.cshtml" />
+    <Content Include="Views\Owners\OwnersAndBuildingsPartial.cshtml" />
+    <Content Include="Views\Owners\_ownerNbuildings.cshtml" />
+    <Content Include="Views\Owners\_buildingsApartments.cshtml" />
+    <Content Include="Views\Buildings\apartmentStatus.cshtml" />
+    <Content Include="Views\Buildings\_apartmentList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BulkUploaded\" />

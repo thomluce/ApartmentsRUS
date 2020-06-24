@@ -1,0 +1,34 @@
+﻿@model IEnumerable<ApartmentsRUS.Models.Apartment>
+
+<table class="table">
+    <tr >
+        <th>
+            @Html.DisplayNameFor(model => model.apartmentNum)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.bedrooms)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.bathrooms)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.maxOccupancy)
+        </th>
+    </tr>
+@foreach (var item in Model) {
+    <tr >
+        <td>
+            @Html.DisplayFor(modelItem => item.apartmentNum)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.bedrooms)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.bathrooms)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.maxOccupancy)
+        </td>
+    </tr>
+}
+</table>

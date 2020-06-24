@@ -164,5 +164,21 @@ namespace ApartmentsRUS.Controllers
             }
             base.Dispose(disposing);
         }
+
+        public ActionResult OwnersAndBuildings()
+        {
+            var ownerList = db.owner.Include(o => o.investor).ToList();
+
+            return View(ownerList);
+        }
+
+        public ActionResult OwnersAndBuildingsPartial()
+        {
+            var ownerList = db.owner.ToList();
+
+            return View(ownerList);
+        }
+
+
     }
 }

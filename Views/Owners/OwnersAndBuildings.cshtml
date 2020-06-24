@@ -1,0 +1,64 @@
+﻿@model IEnumerable<ApartmentsRUS.Models.Owner>
+
+@{
+    ViewBag.Title = "OwnersAndBuildings";
+}
+    <div class="well">
+        <h2>Owners And Buildings</h2>
+    </div>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.fullName)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.phone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.taxID)
+
+        </th>
+
+    </tr>
+
+@foreach (var item in Model) 
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.fullName)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.phone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.taxID)
+        </td>
+
+    </tr>
+    <tr>
+        <td>
+            &nbsp;
+        </td>
+        <td colspan="5">
+            <ul class="bg-info">
+                @{
+                    foreach (ApartmentsRUS.Models.Investor inv in item.investor)
+                    {
+                        <li class="text-primary">@inv.building.buildingAddress</li>
+                    }
+                 }
+                
+            </ul>
+        </td>
+    </tr>
+}
+</table>
