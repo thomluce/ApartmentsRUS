@@ -43,31 +43,24 @@ namespace ApartmentsRUS.Controllers
        [Authorize]
         public ActionResult Create(int? apartmentID)
         {
+            apartmentID = apartmentID ?? 0;
             Guid memberId;
             Guid.TryParse(User.Identity.GetUserId(), out memberId);
             RegisteredUser loggedInUser = db.registeredUsers.Find(memberId);
-            if (loggedInUser != null) // need to check if we found a user
+            if (loggedInUser != null) 
             {
-                // the following lines are currently deactivated so anyone can create a lease
-                //bool isAdmin = loggedInUser.role == RegisteredUser.roles.admin;
-                //bool isOwner = loggedInUser.role == RegisteredUser.roles.owner;
-               // if(isAdmin || isOwner)
-               // {
-                    // find the renterID for this person
-                    var renter = db.renter.Where(r => r.email == loggedInUser.email).FirstOrDefault();
+                var renter = db.renter.Where(r => r.email == loggedInUser.email).FirstOrDefault();
                 var renterID = 0;
                 if(renter != null)
                 { 
                     renterID = renter.renterID;
                 }
-                    ViewBag.apartmentID = new SelectList(db.apartment, "apartmentID", "apartmentAddr", apartmentID);
-                    ViewBag.renterID = new SelectList(db.renter, "renterID", "fullName", renterID);
-                    return View();
-                //}
-                //else
-                //{
-                //    return View("~/Views/Owners/RestrictedOperation.cshtml");
-                //}
+
+                ViewBag.apartmentID = new SelectList(db.apartment.OrderBy(a=>a.building.state).ThenBy(a=>a.building.city).ThenBy(a=>a.building.street).ThenBy(a=>a.apartmentNum),
+                    "apartmentID", "apartmentAddr", apartmentID);
+                ViewBag.renterID = new SelectList(db.renter.OrderBy(r=>r.lastName).ThenBy(r=>r.firstName), "renterID", "fullName", renterID);
+
+                return View();
             }
             else
             {
@@ -114,8 +107,8 @@ namespace ApartmentsRUS.Controllers
 
             }
 
-            ViewBag.apartmentID = new SelectList(db.apartment, "apartmentID", "apartmentAddr", lease.apartmentID);
-            ViewBag.renterID = new SelectList(db.renter, "renterID", "fullName", lease.renterID);
+                ViewBag.apartmentID = new SelectList(db.apartment.OrderBy(a=>a.building.state).ThenBy(a=>a.building.city).ThenBy(a=>a.building.street).ThenBy(a=>a.apartmentNum), "apartmentID", "apartmentAddr", lease.apartmentID);
+                ViewBag.renterID = new SelectList(db.renter.OrderBy(r=>r.lastName).ThenBy(r=>r.firstName), "renterID", "fullName", lease.renterID);
             return View(lease);
         }
 

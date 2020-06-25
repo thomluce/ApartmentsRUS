@@ -39,10 +39,9 @@
         <div class="col-md-4">
             @{
                 ApartmentsRUS.DAL.Context db = new ApartmentsRUS.DAL.Context();
-                var status = "Available";
                 var leaseList = from rental in db.lease select rental;
                 leaseList = leaseList.Where(l => l.apartmentID == item.apartmentID);
-                int c = 0;
+                var status = "Available";
                 foreach (var l in leaseList)
                 {
                     DateTime endDate = l.startDate.AddMonths(l.duration);
