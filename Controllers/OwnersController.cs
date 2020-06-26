@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using ApartmentsRUS.DAL;
 using ApartmentsRUS.Models;
 using Microsoft.AspNet.Identity;
+using PagedList;
 
 namespace ApartmentsRUS.Controllers
 {
@@ -177,6 +178,16 @@ namespace ApartmentsRUS.Controllers
             var ownerList = db.owner.ToList();
 
             return View(ownerList);
+        }
+        public ActionResult RentIncome(int? page)
+        {
+            int pgSize = 5;
+            int pageNumber = (page ?? 1);
+            // we need to go from owner->investor->buildings->apartments->leases
+            // but it can't all be done at once
+            var ownerList = db.owner.OrderBy(o=>o.lastName).ThenBy(o=>o.firstName).ToList();
+            var pagedOwnerList = ownerList.ToPagedList(pageNumber, pgSize);
+            return View(pagedOwnerList);
         }
 
 

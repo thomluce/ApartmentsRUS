@@ -1,0 +1,91 @@
+﻿@model IEnumerable<ApartmentsRUS.Models.Investor>
+@using ApartmentsRUS.DAL;
+@{
+    Context db = new Context();
+    decimal grandTotal = 0;
+}
+<div class="row">
+    <div class="col-md-4">
+        @Html.DisplayNameFor(model => model.building.street)
+    </div>
+
+    <div class="col-md-2">
+        @Html.DisplayNameFor(model => model.purchaseDate)
+    </div>
+
+    <div class="col-md-2">
+        @Html.DisplayNameFor(model => model.percentOwnership)
+    </div>
+    <div class="col-md-4">
+        &nbsp;
+    </div>
+</div>
+
+@foreach (var item in Model)
+{
+    <div class="row bg-warning">
+        <div class="col-md-4">
+            @Html.DisplayFor(modelItem => item.building.street) - 
+            @Html.DisplayFor(modelItem => item.building.city), 
+            @Html.DisplayFor(modelItem => item.building.state)
+        </div>
+
+        <div class="col-md-2">
+            @Html.DisplayFor(modelItem => item.purchaseDate)
+        </div>
+
+        <div class="col-md-2">
+            @Html.DisplayFor(modelItem => item.percentOwnership)
+        </div>
+        <div class="col-md-4">
+            &nbsp;
+        </div>
+    </div>
+    <div class="row">
+        @*<div class="col-md-1">
+                &nbsp;
+            </div>*@
+        <div class="col-md-11">
+            @{
+
+                var apartments = db.apartment.Where(a => a.buildingID == item.buildingID).OrderBy(a => a.apartmentNum);
+                Html.RenderPartial("_apartments", apartments);
+            }
+        </div>
+    </div>
+}
+@{
+
+    var cnt = 0;
+    foreach (var item in Model)  // investors
+    {
+        var apartmentList = db.apartment.Where(a => a.buildingID == item.buildingID).OrderBy(a => a.apartmentNum).ToList();
+        foreach (var apartment in apartmentList)
+        {
+            var leaseList = db.lease.Where(l => l.apartmentID == apartment.apartmentID).ToList();
+            foreach (var lease in leaseList)
+            {
+                DateTime endDate = lease.startDate.AddMonths(lease.duration);
+                DateTime startDate = lease.startDate;
+                if (startDate<DateTime.Now && endDate > DateTime.Now)
+                {
+                    var rent = lease.monthlyRent;
+                    var investor = db.investor.Where(i => i.buildingID == lease.apartment.buildingID).FirstOrDefault();
+                    decimal investorPart = investor.percentOwnership;
+                    var total = (rent * investorPart);
+                    grandTotal += total;
+                    cnt++;
+                }
+            }
+        }
+    }
+
+}
+<div class="row">
+    <div class="col-md-8">
+        &nbsp;
+    </div>
+    <div class="col-md-4">
+        Grand total due investor  = @grandTotal.ToString("c2") for @cnt.ToString() leases
+    </div>
+</div>

@@ -1,0 +1,84 @@
+﻿@model IEnumerable<ApartmentsRUS.Models.Apartment>
+@using ApartmentsRUS.DAL;
+
+@{
+    var aptCnt = 0;
+    decimal grandTotalDue = 0;
+}
+@foreach (var item in Model)
+{
+    Context db = new Context();
+    var leases = db.lease.Where(l => l.apartmentID == item.apartmentID).OrderBy(l => l.apartment.apartmentNum).ToList();
+    if (leases is null || leases.Count() == 0) // skip if no leases
+    {
+        continue;
+    }
+    decimal rent = 0;
+    decimal dueInvestor = 0;
+
+    foreach (var l in leases)
+    {
+        DateTime endDate = l.startDate.AddMonths(l.duration);
+        DateTime startDate = l.startDate;
+        if (startDate < DateTime.Now && endDate > DateTime.Now)
+        {
+            aptCnt++;
+            rent = l.monthlyRent;
+            var investor = db.investor.Where(i => i.buildingID == l.apartment.buildingID).FirstOrDefault();
+            decimal investorPart = investor.percentOwnership;
+            dueInvestor = rent * investorPart;
+            grandTotalDue += dueInvestor;
+
+            if (aptCnt == 1) //only create the header if if this is the first apartment leased
+            {
+                <div class="row">
+                    <div class="col-md-2 text-center">
+                        Apartment
+                    </div>
+                    <div class="col-md-2 text-center">
+                        Bedrooms
+                    </div>
+                    <div class="col-md-2 text-center">
+                        Bathrooms
+                    </div>
+                    <div class="col-md-6">
+                        &nbsp;
+                    </div>
+                </div>
+            }
+
+            <div class="row">
+                <div class="col-md-2 text-center">
+                    @Html.DisplayFor(modelItem => item.apartmentNum)
+                </div>
+                <div class="col-md-2 text-center">
+                    @Html.DisplayFor(modelItem => item.bedrooms)
+                </div>
+                <div class="col-md-2 text-center">
+                    @Html.DisplayFor(modelItem => item.bathrooms)
+                </div>
+                <div class="col-md-6">
+                    Total rent = @rent.ToString("c2"), portion due investor = @dueInvestor.ToString("c2")
+                </div>
+            </div>
+        }
+    }
+}
+@{
+    if (grandTotalDue == 0)
+    {
+        // there is no total so skip displayiung this row
+    }
+    else
+    {
+
+        <div class="row">
+            <div class="col-md-7">
+                &nbsp;
+            </div>
+            <div class="col-md-5">
+                Total due investor for this property = @grandTotalDue.ToString("c2")
+            </div>
+        </div>
+    }
+}

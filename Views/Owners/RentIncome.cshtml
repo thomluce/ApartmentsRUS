@@ -1,0 +1,60 @@
+﻿@model PagedList.IPagedList<ApartmentsRUS.Models.Owner>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "RentIncome";
+}
+@using ApartmentsRUS.DAL;
+<div class="well">
+    <h2>Rental Income</h2>
+</div>
+
+<div class="row">
+    <div class="col-md-2">
+        Owner's Name
+    </div>
+    <div class="col-md-3">
+        Email Address
+    </div>
+    <div class="col-md-2">
+        Phone Number
+    </div>
+    <div class="col-md-5">
+        &nbsp;
+    </div>
+</div>
+
+@foreach (var item in Model)
+{
+    <div class="row bg-info">
+        <div class="col-md-2 text-primary">
+            @Html.DisplayFor(modelItem => item.fullName)
+            (@Html.DisplayFor(modelItem => item.ownerID))
+        </div>
+        <div class="col-md-3 text-primary">
+            @Html.DisplayFor(modelItem => item.email)
+        </div>
+        <div class="col-md-2 text-primary">
+            @Html.DisplayFor(modelItem => item.phone)
+        </div>
+        <div class="col-md-5">
+            &nbsp;
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-11">
+            @{
+                var ownerID = item.ownerID;
+                Context db = new Context();
+                var investments = db.investor.Where(i => i.ownerID == ownerID).OrderBy(i => i.building.state).ThenBy(i => i.building.city).ThenBy(i => i.building.street);
+                if (investments.Count() > 0)
+                {
+                    Html.RenderPartial("_investments", investments);
+                }
+            }
+        </div>
+    </div>
+}
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("RentIncome", new { page }))

@@ -348,6 +348,9 @@
     <Content Include="Views\Owners\_buildingsApartments.cshtml" />
     <Content Include="Views\Buildings\apartmentStatus.cshtml" />
     <Content Include="Views\Buildings\_apartmentList.cshtml" />
+    <Content Include="Views\Owners\RentIncome.cshtml" />
+    <Content Include="Views\Owners\_investments.cshtml" />
+    <Content Include="Views\Owners\_apartments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BulkUploaded\" />
