@@ -19,9 +19,24 @@ namespace ApartmentsRUS.Controllers
         private Context db = new Context();
 
         // GET: Owners
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            return View(db.owner.OrderBy(o=>o.lastName).ThenBy(o=>o.firstName).ToList());
+            page = page ?? 1;
+            var pgSize = 15;
+            ViewBag.page = page;
+            ViewBag.pgSize = pgSize;
+            var owners = db.owner.OrderBy(o => o.lastName).ThenBy(o => o.firstName);
+            var ownerCnt = owners.Count();
+            var totalPgs =(ownerCnt+pgSize-1) / pgSize;
+            ViewBag.totalPgs = totalPgs;
+            var ownerList = owners.Take(pgSize);
+            int pg = (int)page;
+            if (pg>1)
+            {
+                int skipAmt = (pg - 1) * pgSize;
+                ownerList = owners.Skip(skipAmt).Take(pgSize);
+            }
+            return View(ownerList.ToList());
         }
 
         // GET: Owners/Details/5
@@ -189,7 +204,6 @@ namespace ApartmentsRUS.Controllers
             var pagedOwnerList = ownerList.ToPagedList(pageNumber, pgSize);
             return View(pagedOwnerList);
         }
-
 
     }
 }

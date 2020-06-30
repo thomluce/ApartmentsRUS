@@ -1,0 +1,43 @@
+﻿@*@model IEnumerable<ApartmentsRUS.Models.Renter>*@
+@model PagedList.IPagedList<ApartmentsRUS.Models.Renter>
+@using ApartmentsRUS.DAL;
+@using PagedList.Mvc;
+
+<h3>Repeat Renters - Renters with two or more leases</h3>
+<table class="table table-striped">
+    <tr>
+        <th>
+            Renter
+        </th>
+        <th>
+            Renter's email
+        </th>
+        <th></th>
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.fullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.email)
+            </td>
+            <th>
+                @{
+                    Context db = new Context();
+                    var leases = db.lease.Where(l => l.renterID == item.renterID).OrderByDescending(l => l.startDate).ToList();
+                    Html.RenderPartial("_multipleLeases", leases);
+                }
+            </th>
+
+        </tr>
+    }
+
+</table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("RepeatRenters", new { page }))

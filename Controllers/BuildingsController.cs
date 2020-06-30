@@ -95,6 +95,52 @@ namespace ApartmentsRUS.Controllers
             return View(buildingList);
         }
 
+        public ActionResult BuildingStats(int? page, string city, string state, string zip, string sorting)
+        {
+            int pgSize = 15;
+            int pageNumber = (page ?? 1);
+            ViewBag.startDate = String.IsNullOrEmpty(city) ? "" : city;
+            ViewBag.stopDate = String.IsNullOrEmpty(state) ? "" : state;
+            ViewBag.minValue = String.IsNullOrEmpty(zip) ? "" : zip;
+            ViewBag.sorting = String.IsNullOrEmpty(sorting) ? "" : sorting;
+
+            //try to convert parameters
+
+
+            var building = from b in db.building select b;
+            if (String.IsNullOrEmpty(sorting) || sorting == "city" || sorting == "state")  // default sorting
+            {
+                building = building.OrderBy(b => b.state).ThenBy(b => b.city);
+            }
+            else if (sorting == "city")
+            {
+                building = building.OrderBy(b => b.city);
+            }
+            else if (sorting == "zip")
+            {
+                building = building.OrderBy(b => b.zip);
+            }
+            else if (sorting == "state")
+            {
+                building = building.OrderBy(b => b.state);
+            }
+
+            if (!String.IsNullOrEmpty(city))
+            {
+                building = building.Where(b => b.city == city);
+            }
+            if (!String.IsNullOrEmpty(state))
+            {
+                building = building.Where(b => b.state == state);
+            }
+            if (!String.IsNullOrEmpty(zip))
+            {
+                building = building.Where(b => b.zip == zip);
+            }
+            var buildingList = building.ToPagedList(pageNumber, pgSize);
+            return View(buildingList);
+        }
+
         // GET: Buildings/Details/5
         public ActionResult Details(int? id)
         {

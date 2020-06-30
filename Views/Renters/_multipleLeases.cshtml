@@ -1,0 +1,38 @@
+﻿@model IEnumerable<ApartmentsRUS.Models.Lease>
+
+
+<table class="table">
+    <tr>
+        <th>
+            Apartment Address
+        </th>
+        <th>
+            Lease Dates
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.monthlyRent)
+        </th>
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.apartment.apartmentAddr)
+            </td>
+            <td>
+                @{
+                    DateTime endDate = item.startDate.AddMonths(item.duration);
+                }
+                @Html.DisplayFor(modelItem => item.startDate) - @endDate.ToShortDateString()
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.monthlyRent)
+            </td>
+
+        </tr>
+    }
+
+</table>

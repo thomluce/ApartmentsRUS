@@ -15,7 +15,7 @@
             @Html.DisplayNameFor(model => model.apartment.apartmentNum)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.renter.firstName)
+            @Html.DisplayNameFor(model => model.renter.fullName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.startDate)
@@ -47,7 +47,7 @@
             @Html.DisplayFor(modelItem => item.apartment.apartmentNum)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.renter.firstName)
+            @Html.DisplayFor(modelItem => item.renter.fullName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.startDate)
@@ -78,9 +78,10 @@
 
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.leaseID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.leaseID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.leaseID })
+            @Html.ActionLink("Edit", "Edit", new { id = item.leaseID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.leaseID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.leaseID }) |
+            @Html.ActionLink("Renter", "Details","Renters", new { id = item.renterID }, null) 
         </td>
     </tr>
 }

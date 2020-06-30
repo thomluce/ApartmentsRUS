@@ -46,21 +46,23 @@ namespace ApartmentsRUS.Models
         }
 
         public ICollection<Investor> investors { get; set; }
-        public int investmentCnt
-        {
-            get
-            {
-                return investors.Count;
-            }
-        }
+        //public int investmentCnt
+        //{
+        //    get
+        //    {
+        //        //return investors.Count;
+        //        return 0; // not working
+        //    }
+        //}
         public ICollection<Apartment> apartments { get; set; }
-        public int apartmentCnt
-        {
-            get
-            {
-                return apartments.Count;
-            }
-        }
+        //public int apartmentCnt
+        //{
+        //    get
+        //    {
+                
+        //        return apartments.Count();
+        //    }
+        //}
 
 
         [Display(Name = "Building image")]

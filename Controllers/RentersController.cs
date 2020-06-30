@@ -155,5 +155,14 @@ namespace ApartmentsRUS.Controllers
             }
             base.Dispose(disposing);
         }
+
+        public ActionResult RepeatRenters(int? page)
+        {
+            int pgSize = 5;
+            int pageNumber = (page ?? 1);
+            var renters = db.renter.OrderBy(r => r.lastName).ThenBy(r => r.firstName).Where(r => r.leases.Count > 1);
+            var renterList = renters.ToPagedList(pageNumber, pgSize);
+            return View(renterList);
+        }
     }
 }

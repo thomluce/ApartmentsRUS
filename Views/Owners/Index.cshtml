@@ -63,9 +63,9 @@
                         bool isAdmin = loggedInUser.role == RegisteredUser.roles.admin;
                         bool isOwner = loggedInUser.role == RegisteredUser.roles.owner;
                         if (isAdmin || isOwner)
-                        { 
-                             <a href = "/Owners/edit/@item.ownerID" > | Edit </a >
-                             <a href = "/Owners/delete/@item.ownerID" > | Delete </a >
+                        {
+                            <a href="/Owners/edit/@item.ownerID"> | Edit </a>
+                            <a href="/Owners/delete/@item.ownerID"> | Delete </a>
                         }
                     }
                 }
@@ -77,3 +77,22 @@
     }
 
 </table>
+
+Page @ViewBag.page
+<br />
+@{
+    int currentPage = ViewBag.page;
+    int previousPage = currentPage - 1;
+    int nextPage = currentPage + 1;
+    if(previousPage <1)
+    {
+        previousPage = 1;
+    }
+    if (nextPage > ViewBag.totalPgs)
+    {
+        nextPage--;
+    }
+    @Html.ActionLink("Previous Page", "Index", "Owners", new { page=@previousPage }, null) <span>|</span>
+    
+}
+@Html.ActionLink("Next Page", "Index", "Owners", new { page=@nextPage }, null)

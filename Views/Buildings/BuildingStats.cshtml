@@ -1,0 +1,160 @@
+﻿@*@model IEnumerable<ApartmentsRUS.Models.Building>*@
+
+@model PagedList.IPagedList<ApartmentsRUS.Models.Building>
+
+@using PagedList.Mvc;
+@using ApartmentsRUS.DAL;
+@using ApartmentsRUS.Models;
+@{
+    ViewBag.Title = "Building Stats";
+}
+<div class="well">
+    <h2>Building Stats</h2>
+</div>
+<div class="form-horizontal">
+    @using (Html.BeginForm("BuildingStats", "Buildings", FormMethod.Get))
+    {
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-12">
+                    To search, enter one or more criteria and press the Search button
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <p>
+                        City:
+                        @Html.TextBox("City", ViewBag.search as string)
+                    </p>
+                </div>
+                <div class="col-md-3">
+                    <p>
+                        State:
+                        @Html.TextBox("State", ViewBag.search as string)
+                    </p>
+                </div>
+                <div class="col-md-3">
+                    <p>
+                        Zip:
+                        @Html.TextBox("Zip", ViewBag.search as string)
+                        <input type="submit" value="Search" />
+                    </p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<table class="table table-striped">
+    <tr>
+        <th>
+            Street
+        </th>
+        <th>
+            @Html.ActionLink("City", "Index", "Buildings", new { startDate = ViewBag.startDate, stopDate = ViewBag.stopDate, minValue = ViewBag.minValue, sorting = "city" }, null)
+        </th>
+        <th>
+            @Html.ActionLink("State", "Index", "Buildings", new { startDate = ViewBag.startDate, stopDate = ViewBag.stopDate, minValue = ViewBag.minValue, sorting = "state" }, null)
+        </th>
+        <th>
+            @Html.ActionLink("Zip", "Index", "Buildings", new { startDate = ViewBag.startDate, stopDate = ViewBag.stopDate, minValue = ViewBag.minValue, sorting = "zip" }, null)
+        </th>
+        <th>
+            # Apts
+        </th>
+        <th>
+            Leased
+        </th>
+        <th>
+            Min Rent
+        </th>
+        <th>
+            Max Rent
+        </th>
+        <th>
+            Avg Rent
+        </th>
+        <th>
+            Total Current<br/>Monthly Rent
+        </th>
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.street)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.city)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.state)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.zip)
+            </td>
+            <td class="text-center">
+                @{
+                    Context db = new Context();
+                    int aptCnt = db.apartment.Where(a => a.buildingID == item.buildingID).Count();
+                    @aptCnt
+                }
+            </td>
+            <td class="text-center">
+                @{
+                    int CurrentCnt = 0;
+                    var aptLeases = db.lease.Where(l => l.apartment.buildingID == item.buildingID).ToList();
+                    if (aptLeases.Count() > 0)
+                    {
+                        foreach (Lease l in aptLeases)
+                        {
+                            DateTime endOfLease = l.startDate.AddMonths(l.duration);
+                            if (endOfLease >= DateTime.Now && l.startDate <= DateTime.Now)
+                            {
+                                CurrentCnt++;
+                            }
+                        }
+                    }
+                    @CurrentCnt;
+                }
+            </td>
+            <td class="text-right">
+                @{
+                    //Context db = new Context();
+                    aptLeases = db.lease.Where(l => l.apartment.buildingID == item.buildingID).ToList();
+                    decimal minRent = 0.0m;
+                    decimal maxRent = 0.0m;
+                    decimal avgRent = 0.0m;
+                    decimal sum = 0.0m;
+                    if (aptLeases.Count > 0)
+                    {
+                        minRent = aptLeases.Min(l => l.monthlyRent);
+                        maxRent = aptLeases.Max(l => l.monthlyRent);
+                        avgRent = aptLeases.Average(l => l.monthlyRent);
+                        sum = aptLeases.Where(a => a.startDate <= DateTime.Now && DateTime.Now <= a.startDate.AddMonths(a.duration)).Sum(a => a.monthlyRent);
+                    }
+                    @minRent.ToString("c2")
+                }
+            </td>
+            <td class="text-right">
+                @maxRent.ToString("c2")
+            </td>
+            <td class="text-right">
+                @avgRent.ToString("c2")
+
+            </td>
+            <td class="text-right">
+                @sum.ToString("c2")
+            </td>
+        </tr>
+    }
+
+</table>
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("BuildingStats",
+    new { page, city = ViewBag.City, state = ViewBag.State, zip = ViewBag.Zip, sorting = ViewBag.sorting }))
+
+@*new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))*@
