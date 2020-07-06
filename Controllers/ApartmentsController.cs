@@ -60,7 +60,7 @@ namespace ApartmentsRUS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var apartment = db.apartment.Where(a => a.apartmentID == id);
+            var apartment = db.apartment.Find(id);
             if (apartment == null)
             {
                 return HttpNotFound();

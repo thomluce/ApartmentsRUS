@@ -354,6 +354,9 @@
     <Content Include="Views\Buildings\BuildingStats.cshtml" />
     <Content Include="Views\Renters\RepeatRenters.cshtml" />
     <Content Include="Views\Renters\_multipleLeases.cshtml" />
+    <Content Include="Views\Renters\RentersByState.cshtml" />
+    <Content Include="Views\Buildings\search.cshtml" />
+    <Content Include="Views\Leases\newLeases.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BulkUploaded\" />

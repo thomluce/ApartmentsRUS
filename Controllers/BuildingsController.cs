@@ -450,5 +450,24 @@ namespace ApartmentsRUS.Controllers
 
             return View(buildings);
         }
+
+        public ActionResult search (string city, string state)
+        {
+           // var buildings = db.building.Select(b=>b);
+           var  buildings = db.building.OrderBy(b => b.state).ThenBy(b => b.city).ThenBy(b => b.street);
+            if (!String.IsNullOrEmpty(city) && !String.IsNullOrEmpty(state))
+            {
+                buildings = db.building.Where(b => b.state == state && b.city == city).OrderBy(b => b.state).ThenBy(b => b.city).ThenBy(b => b.street);
+            }
+            else if(!String.IsNullOrEmpty(city))
+            {
+                buildings = db.building.Where(b => b.city == city).OrderBy(b => b.state).ThenBy(b => b.city).ThenBy(b => b.street);
+            }
+            else if(!String.IsNullOrEmpty(state))
+            {
+                buildings = db.building.Where(b => b.state == state).OrderBy(b => b.state).ThenBy(b => b.city).ThenBy(b => b.street);
+            }
+                return View(buildings);
+        }
     }
 }

@@ -1,0 +1,111 @@
+﻿@model IEnumerable<ApartmentsRUS.Models.Lease>
+
+@{
+    ViewBag.Title = "RentersByCState";
+}
+
+<h2>Renters By State</h2>
+<div class="form-horizontal">
+    @using (Html.BeginForm("RentersByState", "Renters", FormMethod.Get))
+    {
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-12">
+                    To search, enter criteria and press the Search button
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <p>
+                        Current State:
+                        @Html.TextBox("state", ViewBag.search as string)
+                        <input type="submit" value="Search" />
+                    </p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.apartment.apartmentAddr)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.renter.fullName)
+        </th>
+        <th>
+            Lease Dates
+        </th>
+
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+
+        DateTime start = item.startDate;
+        DateTime end = start.AddMonths(item.duration);
+        if (start > DateTime.Now || end < DateTime.Now) // the lease isn't active
+        {
+            //         continue; // so don't show the lease info
+        }
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.apartment.apartmentAddr)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.renter.fullName)
+            </td>
+            <td>
+                @start.ToShortDateString() - @end.ToShortDateString()
+            </td>
+
+        </tr>
+    }
+
+</table>
+<h3>Tests for First and Last</h3>
+@{
+    try
+    {
+        var first = Model.First();
+        <p>First = @first.renter.fullName</p>
+    }
+    catch (Exception ex)
+    {
+        <p>Model.First exception = @ex.Message</p>
+
+    }
+    var firstOrDefault = Model.FirstOrDefault();
+    try
+    {
+        var last = Model.Last();
+        <p>Last = @last.renter.fullName</p>
+    }
+    catch (Exception ex)
+    {
+        <p>Model.Last exception = @ex.Message</p>
+
+    }
+    var lastOrDefault = Model.LastOrDefault();
+    if (firstOrDefault == null)
+    {
+        <p>firstOrDefault is null</p>
+    }
+    else
+    {
+        <p>FirstOrDefault = @firstOrDefault.renter.fullName</p>
+
+    }
+    if (lastOrDefault == null)
+    {
+        <p>LastOrDefault is null</p>
+    }
+    else
+    {
+        <p>LastOrDefault = @lastOrDefault.renter.fullName</p>
+    }
+
+}

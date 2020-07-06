@@ -1,0 +1,39 @@
+﻿@model IEnumerable<ApartmentsRUS.Models.Lease>
+
+@{
+    ViewBag.Title = "newLeases";
+}
+
+<h2>New Leases between @ViewBag.start.ToShortDateString() and @ViewBag.end.ToShortDateString()</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.apartment.apartmentAddr)
+        </th>
+        <th>
+            Leased to
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.startDate)
+        </th>
+
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.apartment.apartmentAddr)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.renter.fullName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.startDate)
+        </td>
+
+    </tr>
+}
+
+</table>

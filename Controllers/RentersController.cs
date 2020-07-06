@@ -158,11 +158,23 @@ namespace ApartmentsRUS.Controllers
 
         public ActionResult RepeatRenters(int? page)
         {
+            var buildings = db.building.TakeWhile(b => b.state == "CA");
             int pgSize = 5;
             int pageNumber = (page ?? 1);
             var renters = db.renter.OrderBy(r => r.lastName).ThenBy(r => r.firstName).Where(r => r.leases.Count > 1);
             var renterList = renters.ToPagedList(pageNumber, pgSize);
             return View(renterList);
+        }
+        public ActionResult RentersByState(string state)
+        {
+            var leases = db.lease.Include(l => l.renter);
+            if(!String.IsNullOrEmpty(state))
+            {
+                leases = db.lease.Include(l => l.renter).Where(l => l.apartment.building.state == state);
+            }
+            // Linq doesn't like using derived fields so we cannot sort by renter.fullName
+            var leaseList = leases.OrderBy(l => l.renter.lastName).ThenBy(l=>l.renter.firstName).ToList();
+            return View(leaseList);
         }
     }
 }

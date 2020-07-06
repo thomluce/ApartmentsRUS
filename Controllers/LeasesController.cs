@@ -325,5 +325,29 @@ namespace ApartmentsRUS.Controllers
         {
             return RedirectToAction("leaseExpiring", "Apartments");
         }
+
+        public ActionResult newLeases(DateTime? start, DateTime? end)
+        {
+            // if no dates are given, assume that last six months
+            if (start == null && end == null)
+            {
+                start = DateTime.Now.AddMonths(-12);
+                end = DateTime.Now;
+            }
+            else if (start == null)
+            {
+                // if there is an end date but no start data, set the start to 12 months earlier
+                start = end.Value.AddMonths(-12);
+            }
+            else if(end == null)
+            {
+                // and if there is a start date but no end date, sent the end date to 12 later
+                end = start.Value.AddMonths(12);
+            }
+            ViewBag.start = start;
+            ViewBag.end = end;
+            var leases = db.lease.Where(l => l.startDate >= start && l.startDate <= end).OrderByDescending(l=>l.startDate).ToList();
+            return View(leases);
+        }
     }
 }
