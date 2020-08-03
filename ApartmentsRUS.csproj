@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\EntityFramework.6.4.0\build\EntityFramework.props" Condition="Exists('packages\EntityFramework.6.4.0\build\EntityFramework.props')" />
   <Import Project="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -45,6 +46,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.4.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.4.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
@@ -118,12 +125,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
-      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer">
-      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core">
       <HintPath>packages\Microsoft.AspNet.Identity.Core.2.2.3\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
@@ -212,8 +213,34 @@
     <Content Include="App_Data\ApartmentsRUS_log.ldf">
       <DependentUpon>ApartmentsRUS.mdf</DependentUpon>
     </Content>
+    <Content Include="BulkUploaded\shutterstock_1147398995.jpg" />
+    <Content Include="BulkUploaded\shutterstock_1228901179.jpg" />
+    <Content Include="BulkUploaded\shutterstock_1347368183.jpg" />
+    <Content Include="BulkUploaded\shutterstock_137820656.jpg" />
+    <Content Include="BulkUploaded\shutterstock_1445600381.jpg" />
+    <Content Include="BulkUploaded\shutterstock_169752035.jpg" />
+    <Content Include="BulkUploaded\shutterstock_346048085.jpg" />
+    <Content Include="BulkUploaded\shutterstock_404825329.jpg" />
+    <Content Include="BulkUploaded\shutterstock_762533818.jpg" />
+    <Content Include="BulkUploaded\smDSC_2417.jpg" />
+    <Content Include="BulkUploaded\smDSC_2440.jpg" />
+    <Content Include="BulkUploaded\smxDSC_2024.jpg" />
+    <Content Include="BulkUploaded\smxDSC_2068.jpg" />
+    <Content Include="BulkUploaded\smxDSC_2191.jpg" />
+    <Content Include="BulkUploaded\smxDSC_2260.jpg" />
+    <Content Include="BulkUploaded\smxDSC_2391.jpg" />
+    <Content Include="BulkUploaded\smxDSC_2498.jpg" />
+    <Content Include="BulkUploaded\utah_smDSC_2417.jpg" />
+    <Content Include="BulkUploaded\utah_smDSC_2440.jpg" />
+    <Content Include="BulkUploaded\utah_smxDSC_2024.jpg" />
+    <Content Include="BulkUploaded\utah_smxDSC_2068.jpg" />
+    <Content Include="BulkUploaded\utah_smxDSC_2191.jpg" />
+    <Content Include="BulkUploaded\utah_smxDSC_2260.jpg" />
+    <Content Include="BulkUploaded\utah_smxDSC_2391.jpg" />
+    <Content Include="BulkUploaded\utah_smxDSC_2498.jpg" />
     <Content Include="Content\PagedList.css" />
-    <Content Include="Uploads\9f3d6806-3a82-476f-82af-dddf2b67f1f1.png" />
+    <Content Include="Uploads\1b8dee0e-96a4-45f3-a65d-05e54b4ffc08.jpg" />
+    <Content Include="Uploads\2840cc8d-ea26-4bac-8ca5-90f05ee24f04.jpg" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -227,6 +254,8 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Models\repos - Shortcut.lnk" />
+    <Content Include="LeaseDocuments\b161980f-e86b-42be-a40c-b1ff5179d5da.docx" />
+    <None Include="Properties\PublishProfiles\ApartmentsRUS-SQL - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -238,6 +267,10 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Uploads\ab17a56e-a034-4ac2-bf84-089cb006a67c.jpg" />
+    <Content Include="Uploads\ba66d9f0-e0c5-4c94-9fbc-21541dc263aa.jpg" />
+    <Content Include="Uploads\c7057450-0f37-4fd4-87f1-daf76ec7cb8b.jpg" />
+    <Content Include="Uploads\e8c361ca-c3b2-46af-bb7f-8f404d1697d2.jpg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -358,10 +391,7 @@
     <Content Include="Views\Buildings\search.cshtml" />
     <Content Include="Views\Leases\newLeases.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="BulkUploaded\" />
-    <Folder Include="LeaseDocuments\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -408,7 +438,10 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('packages\EntityFramework.6.4.0\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.4.0\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('packages\EntityFramework.6.4.0\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.4.0\build\EntityFramework.targets'))" />
   </Target>
+  <Import Project="packages\EntityFramework.6.4.0\build\EntityFramework.targets" Condition="Exists('packages\EntityFramework.6.4.0\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
